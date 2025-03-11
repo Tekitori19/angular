@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'lab1';
+  title = 'Phan Dương Định';
+  mssv = 'MSSV: PD09993';
 }
