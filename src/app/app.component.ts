@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductModel } from './product-card/product.model';
+import { EventProduct } from './product-card/product-card.component';
 
 @Component({
     selector: 'app-root',
@@ -10,6 +11,8 @@ import { ProductModel } from './product-card/product.model';
 export class AppComponent {
     title = 'Phan Dương Định';
     mssv = 'MSSV: PD09993';
+    eventList: EventProduct[] = [];
+    totalPrice: number = 0;
     product: ProductModel = {
         id: "5da0ac18-62b5-4837-bd94-7ac2ea380d2a",
         name: 'T-shirt',
@@ -52,7 +55,7 @@ export class AppComponent {
                     "40*40",
                 ],
                 quantity: 51,
-                instock: false,
+                instock: true,
             },
         ]
     };
@@ -95,4 +98,8 @@ export class AppComponent {
         ]
     };
 
+    showEvent(event: EventProduct) {
+        this.eventList.push(event);
+        this.totalPrice += event.price * event.quantity;
+    }
 }

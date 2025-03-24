@@ -1,5 +1,38 @@
+<div class="container mx-auto p-4" *ngIf="eventList.length > 0">
+    <h1 class="text-2xl font-bold mb-4">Event List</h1>
+    <table class="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border border-gray-300 px-4 py-2">Name</th>
+                <th class="border border-gray-300 px-4 py-2">Color Name</th>
+                <th class="border border-gray-300 px-4 py-2">Price</th>
+                <th class="border border-gray-300 px-4 py-2">Quantity</th>
+                <th class="border border-gray-300 px-4 py-2">Chosen Size</th>
+                <th class="border border-gray-300 px-4 py-2">Is Favorite</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let event of eventList" class="hover:bg-gray-50">
+                <td class="border border-gray-300 px-4 py-2">{{ event.name }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ event.colorName }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ event.price | currency:"VND" }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ event.quantity }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ event.choosedSize }}</td>
+                <td class="border border-gray-300 px-4 py-2">
+                    <span [class]="event.isFavorite ? 'text-green-500' : 'text-red-500'">
+                        {{ event.isFavorite ? 'Yes' : 'No' }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="flex justify-end mt-4">
+        Tong tien: {{totalPrice | currency:"VND"}}
+    </div>
+</div>
+
 <div class="flex flex-wrap justify-between gap-2 m-1">
-    <app-product-card [product]="product"></app-product-card>
-    <app-product-card [product]="product2"></app-product-card>
+    <app-product-card [product]="product" (newProduct)="showEvent($event)"></app-product-card>
+    <app-product-card [product]="product2" (newProduct)="showEvent($event)"></app-product-card>
     <!-- <router-outlet /> -->
 </div>

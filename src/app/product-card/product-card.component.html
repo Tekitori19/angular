@@ -1,4 +1,4 @@
-<!-- <h1>{{this.imgColorID}}</h1> -->
+<!-- <h1>{{this.selectedSize}}</h1> -->
 <!-- <h1>{{this.carousel | json}}</h1> -->
 <div class="card bg-base-100 w-96 shadow-sm border border-slate-800">
     <app-carousel [slides]="carousel">
@@ -31,8 +31,9 @@
         <div class="size-select">
             <label for="size" class="block text-[1rem] font-medium">Size:</label>
             <span>
-                <input [disabled]="!instock" *ngFor="let size of sizes" [id]="size" type="radio" name="size"
-                    class=" mr-1 btn rounded-4xl" [attr.aria-label]="size" [value]="size" />
+                <input [disabled]="!instock" *ngFor="let size of sizes" [id]="size" type="radio" required
+                    [name]="'size'+imgColorID" class="mr-1 btn rounded-4xl" [attr.aria-label]="size" [value]="size"
+                    [(ngModel)]="selectedSize" />
             </span>
         </div>
         <div class="quantity">
@@ -48,10 +49,11 @@
                     </span>
                 </ng-template>
             </label>
-            <input type="number" name="size" class="input validator w-full" required [disabled]="!instock"
-                [placeholder]="'Type a number between 1 to ' + quantity" min="1" [max]="quantity"
-                [title]="'Must be between be 1 to' + quantity" />
-            <p class="validator-hint">Must be between be 1 to {{quantity}}</p>
+            <input type="number" [name]="'quantity'+imgColorID" class="input validator w-full" required
+                [disabled]="!instock" [placeholder]="'Type a number between 1 to ' + defaultQuantity" min="1"
+                [max]="defaultQuantity || 1" [id]="'quantity'+imgColorID" [value]="quantity" [(ngModel)]="quantity"
+                [title]="'Must be between be 1 to' + defaultQuantity" />
+            <p class="validator-hint">Must be between be 1 to {{defaultQuantity}}</p>
         </div>
         <div class="buynow flex items-center justify-between">
             <div class="flex items-center justify-between">
