@@ -1,4 +1,5 @@
 export interface ProductModel {
+    id: string
     name: string
     desc: string
     star: string
@@ -6,13 +7,14 @@ export interface ProductModel {
     oldPrice: number
     isBestSeller: boolean
     ratingAmount: string
-    colors: ColorModel
-    sizes: string[]
-    quantity: number
-    instock: boolean
+    colors: ColorModel[]
 }
 
 export interface ColorModel {
-    colorName: ("red" | "blue" | "orange" | "green" | "pink")[];
+    id: string
+    name: string
     imgfollowColor: string[]
+    sizes: string[]
+    quantity: number
+    instock: boolean
 }

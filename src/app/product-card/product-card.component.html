@@ -1,0 +1,67 @@
+<!-- <h1>{{this.imgColorID}}</h1> -->
+<!-- <h1>{{this.carousel | json}}</h1> -->
+<div class="card bg-base-100 w-96 shadow-sm border border-slate-800">
+    <app-carousel [slides]="carousel">
+    </app-carousel>
+    <div class=" card-body">
+        <div class="price font-medium">
+            <span class="text-red-500 mr-1">{{ product.price | currency:'VND' }}</span>
+            <span class="text-slate-500 line-through mr-1">{{ product.oldPrice | currency:'VND' }}</span>
+            <span *ngIf="product.isBestSeller"
+                class="badge badge-secondary rounded-4xl bg-amber-500 border-amber-500 text-amber-900">Best
+                seller</span>
+        </div>
+        <h2 class="card-title flex w-full justify-between">
+            <span> {{product.name}} </span>
+            <span>⭐ {{product.star}} ({{product.ratingAmount}})</span>
+        </h2>
+        <p>{{product.desc}}</p>
+        <div class="color-select">
+            <label for="radio" class="block text-[1rem] font-medium">Color:</label>
+            <!-- do tailwind chưa support chứ không phải do code gà: https://github.com/tailwindlabs/tailwindcss/issues/16801 -->
+            <input *ngFor="let color of product.colors; index as i" type="radio" [name]="'radio'+ product.id"
+                [value]="color.id" [(ngModel)]="imgColorID" (change)="onColorChange()" class="mr-1 radio" [ngClass]="{
+                'bg-red-500 text-red-500': color.name === 'red',
+                'bg-blue-500 text-blue-500': color.name === 'blue',
+                'bg-green-500 text-green-500': color.name === 'green',
+                'bg-orange-500 text-orange-500': color.name === 'orange',
+                'bg-pink-500 text-pink-500': color.name === 'pink'
+            }" />
+        </div>
+        <div class="size-select">
+            <label for="size" class="block text-[1rem] font-medium">Size:</label>
+            <span>
+                <input [disabled]="!instock" *ngFor="let size of sizes" [id]="size" type="radio" name="size"
+                    class=" mr-1 btn rounded-4xl" [attr.aria-label]="size" [value]="size" />
+            </span>
+        </div>
+        <div class="quantity">
+            <label for="size" class="block text-[1rem] font-medium">Quantity:
+                <span *ngIf="instock; else noStock"
+                    class="badge badge-secondary rounded-4xl bg-green-300 border-green-300 text-green-900">
+                    In stock
+                </span>
+                <ng-template #noStock>
+                    <span *ngIf="!instock"
+                        class="badge badge-secondary rounded-4xl bg-amber-300 border-amber-300 text-amber-900">
+                        Out stock
+                    </span>
+                </ng-template>
+            </label>
+            <input type="number" name="size" class="input validator w-full" required [disabled]="!instock"
+                [placeholder]="'Type a number between 1 to ' + quantity" min="1" [max]="quantity"
+                [title]="'Must be between be 1 to' + quantity" />
+            <p class="validator-hint">Must be between be 1 to {{quantity}}</p>
+        </div>
+        <div class="buynow flex items-center justify-between">
+            <div class="flex items-center justify-between">
+                <i [ngClass]="'fa fa-heart text-3xl mr-2 cursor-pointer ' + favouriteColor" (click)="handleFavourite()"
+                    aria-hidden="true"></i>
+                <i [class]="'fa fa-shopping-bag text-3xl cursor-pointer ' + addToCartColor" (click)="handleAddToCart()"
+                    aria-hidden="true"></i>
+            </div>
+            <button class="btn btn-primary block p-1 w-3/4 cursor-pointer" [disabled]="!instock"
+                (click)="handleBuyNow()">Buy now</button>
+        </div>
+    </div>
+</div>
