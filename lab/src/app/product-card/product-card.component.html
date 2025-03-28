@@ -11,7 +11,7 @@
                 class="badge badge-secondary rounded-4xl bg-amber-500 border-amber-500 text-amber-900">Best
                 seller</span>
         </div>
-        <h2 class="card-title flex w-full justify-between">
+        <h2 class="card-title flex w-full justify-between cursor-pointer" [routerLink]="['/card', product.id]">
             <span> {{product.name}} </span>
             <span>⭐ {{product.star}} ({{product.ratingAmount}})</span>
         </h2>
@@ -25,8 +25,21 @@
                 'bg-blue-500 text-blue-500': color.name === 'blue',
                 'bg-green-500 text-green-500': color.name === 'green',
                 'bg-orange-500 text-orange-500': color.name === 'orange',
-                'bg-pink-500 text-pink-500': color.name === 'pink'
-            }" />
+                'bg-pink-500 text-pink-500': color.name === 'pink',
+                'bg-yellow-500 text-yellow-500': color.name === 'yellow',
+                'bg-purple-500 text-purple-500': color.name === 'purple',
+                'bg-gray-500 text-gray-500': color.name === 'gray',
+                'bg-teal-500 text-teal-500': color.name === 'teal',
+                'bg-indigo-500 text-indigo-500': color.name === 'indigo',
+                'bg-cyan-500 text-cyan-500': color.name === 'cyan',
+                'bg-lime-500 text-lime-500': color.name === 'lime',
+                'bg-amber-500 text-amber-500': color.name === 'amber',
+                'bg-emerald-500 text-emerald-500': color.name === 'emerald',
+                'bg-fuchsia-500 text-fuchsia-500': color.name === 'fuchsia',
+                'bg-rose-500 text-rose-500': color.name === 'rose',
+                'bg-sky-500 text-sky-500': color.name === 'sky',
+                'bg-violet-500 text-violet-500': color.name === 'violet'
+                }" />
         </div>
         <div class="size-select">
             <label for="size" class="block text-[1rem] font-medium">Size:</label>

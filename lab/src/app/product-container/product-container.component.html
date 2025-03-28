@@ -1,0 +1,4 @@
+<div class="flex flex-wrap justify-around gap-2 m-1">
+    <app-product-card *ngFor="let product of products" [product]="product"
+        (newProduct)="showEvent($event)"></app-product-card>
+</div>
