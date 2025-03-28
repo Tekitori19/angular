@@ -42,6 +42,7 @@ export class ProductCardComponent implements OnInit {
     }
 
     onColorChange() {
+        this.selectedSize = '';
         this.carousel = this.product.colors.find(color => color.id === this.imgColorID);
         this.sizes = this.carousel?.sizes;
         this.instock = this.carousel?.instock;
