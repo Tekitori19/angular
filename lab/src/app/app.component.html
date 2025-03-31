@@ -1,36 +1,155 @@
 <app-header></app-header>
 
-<!-- <div class="container mx-auto p-4" *ngIf="eventList.length > 0"> -->
-<!--     <h1 class="text-2xl font-bold mb-4">Event List</h1> -->
-<!--     <table class="table-auto w-full border-collapse border border-gray-300"> -->
-<!--         <thead> -->
-<!--             <tr class="bg-gray-100"> -->
-<!--                 <th class="border border-gray-300 px-4 py-2">Name</th> -->
-<!--                 <th class="border border-gray-300 px-4 py-2">Color Name</th> -->
-<!--                 <th class="border border-gray-300 px-4 py-2">Price</th> -->
-<!--                 <th class="border border-gray-300 px-4 py-2">Quantity</th> -->
-<!--                 <th class="border border-gray-300 px-4 py-2">Chosen Size</th> -->
-<!--                 <th class="border border-gray-300 px-4 py-2">Is Favorite</th> -->
-<!--             </tr> -->
-<!--         </thead> -->
-<!--         <tbody> -->
-<!--             <tr *ngFor="let event of eventList" class="hover:bg-gray-50"> -->
-<!--                 <td class="border border-gray-300 px-4 py-2">{{ event.name }}</td> -->
-<!--                 <td class="border border-gray-300 px-4 py-2">{{ event.colorName }}</td> -->
-<!--                 <td class="border border-gray-300 px-4 py-2">{{ event.price | currency:"VND" }}</td> -->
-<!--                 <td class="border border-gray-300 px-4 py-2">{{ event.quantity }}</td> -->
-<!--                 <td class="border border-gray-300 px-4 py-2">{{ event.choosedSize }}</td> -->
-<!--                 <td class="border border-gray-300 px-4 py-2"> -->
-<!--                     <span [class]="event.isFavorite ? 'text-green-500' : 'text-red-500'"> -->
-<!--                         {{ event.isFavorite ? 'Yes' : 'No' }} -->
-<!--                     </span> -->
-<!--                 </td> -->
-<!--             </tr> -->
-<!--         </tbody> -->
-<!--     </table> -->
-<!--     <div class="flex justify-end mt-4"> -->
-<!--         Tổng tiền: {{totalPrice | currency:"VND"}} -->
-<!--     </div> -->
-<!-- </div> -->
-
 <router-outlet />
+
+<section id="about" class="section-wrapper">
+    <div class="flex items-center gap-8 mb-12" style="flex-direction:row-reverse">
+        <div class="w-full h-[1px] bg-zinc-700"></div>
+        <h2>
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;"><span
+                        class="text-3xl md:text-5xl font-black text-end">About<span
+                            class="text-indigo-500">.</span></span></div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+        </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-8">
+        <div class="space-y-4">
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <p class="leading-relaxed text-zinc-300"><span
+                            class="bg-indigo-500 text-white py-2 px-3 rounded font-bold mr-1 float-left text-2xl">H</span>ey!
+                        I'm Bob, if you haven't already gathered that by now. I'm a painter turned software engineer
+                        from Daytona, Florida. I specialize in the backend, primarily Node and Rust, but love building
+                        with whatever tools are right for the job.</p>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <p class="leading-relaxed text-zinc-300">I currently work for Google on Google Photos. I also toss
+                        in my ¢2 with the design systems teams from time to time (once an artist, always an artist,
+                        amirite?).</p>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <p class="leading-relaxed text-zinc-300">Outside of work, I still love to paint. Any given Sunday
+                        you'll find me scribbling some happy clouds with my son ☁️ I even teach courses online if you're
+                        looking to learn!</p>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <p class="leading-relaxed text-zinc-300">I'm passively looking for new positions where I can merge
+                        my love for code with my love for the canvas. If you think you've got an opening that I might
+                        like, let's connect 🔗</p>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-4 text-sm text-indigo-300"><span>My links</span><svg
+                                stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024"
+                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88.5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-.7 5.2-2L869 536.2a32.07 32.07 0 0 0 0-48.4z">
+                                </path>
+                            </svg></div>
+                        <div class="flex items-center text-lg gap-4"><a
+                                class="text-zinc-300 hover:text-indigo-300 transition-colors" target="_blank"
+                                rel="nofollow" href="https://www.linkedin.com"><svg stroke="currentColor"
+                                    fill="currentColor" stroke-width="0" role="img" viewBox="0 0 24 24" height="1em"
+                                    width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z">
+                                    </path>
+                                </svg></a><a class="text-zinc-300 hover:text-indigo-300 transition-colors"
+                                target="_blank" rel="nofollow" href="https://www.github.com"><svg stroke="currentColor"
+                                    fill="currentColor" stroke-width="0" role="img" viewBox="0 0 24 24" height="1em"
+                                    width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12">
+                                    </path>
+                                </svg></a><a class="text-zinc-300 hover:text-indigo-300 transition-colors"
+                                target="_blank" rel="nofollow" href="https://www.x.com"><svg stroke="currentColor"
+                                    fill="currentColor" stroke-width="0" role="img" viewBox="0 0 24 24" height="1em"
+                                    width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z">
+                                    </path>
+                                </svg></a><a class="text-zinc-300 hover:text-indigo-300 transition-colors"
+                                target="_blank" rel="nofollow" href="https://www.codepen.io"><svg stroke="currentColor"
+                                    fill="currentColor" stroke-width="0" role="img" viewBox="0 0 24 24" height="1em"
+                                    width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18.144 13.067v-2.134L16.55 12zm1.276 1.194a.628.628 0 01-.006.083l-.005.028-.011.053-.01.031c-.005.016-.01.031-.017.047l-.014.03a.78.78 0 01-.021.043l-.019.03a.57.57 0 01-.08.1l-.026.025a.602.602 0 01-.036.03l-.029.022-.01.008-6.782 4.522a.637.637 0 01-.708 0L4.864 14.79l-.01-.008a.599.599 0 01-.065-.052l-.026-.025-.032-.034-.021-.028a.588.588 0 01-.067-.11l-.014-.031a.644.644 0 01-.017-.047l-.01-.03c-.004-.018-.008-.036-.01-.054l-.006-.028a.628.628 0 01-.006-.083V9.739c0-.028.002-.055.006-.083l.005-.027.011-.054.01-.03a.574.574 0 01.12-.217l.031-.034.026-.025a.62.62 0 01.065-.052l.01-.008 6.782-4.521a.638.638 0 01.708 0l6.782 4.521.01.008.03.022.035.03c.01.008.017.016.026.025a.545.545 0 01.08.1l.019.03a.633.633 0 01.021.043l.014.03c.007.016.012.032.017.047l.01.031c.004.018.008.036.01.054l.006.027a.619.619 0 01.006.083zM12 0C5.373 0 0 5.372 0 12 0 18.627 5.373 24 12 24c6.628 0 12-5.372 12-12 0-6.627-5.372-12-12-12m0 10.492L9.745 12 12 13.51 14.255 12zm.638 4.124v2.975l4.996-3.33-2.232-1.493zm-6.272-.356l4.996 3.33v-2.974l-2.764-1.849zm11.268-4.52l-4.996-3.33v2.974l2.764 1.85zm-6.272-.356V6.41L6.366 9.74l2.232 1.493zm-5.506 1.549v2.134L7.45 12Z">
+                                    </path>
+                                </svg></a></div>
+                    </div>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <div>
+                        <h4 class="flex items-center mb-6"><svg stroke="currentColor" fill="currentColor"
+                                stroke-width="0" viewBox="0 0 1024 1024" class="text-indigo-500 text-2xl" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zM513.1 518.1l-192 161c-5.2 4.4-13.1.7-13.1-6.1v-62.7c0-2.3 1.1-4.6 2.9-6.1L420.7 512l-109.8-92.2a7.63 7.63 0 0 1-2.9-6.1V351c0-6.8 7.9-10.5 13.1-6.1l192 160.9c3.9 3.2 3.9 9.1 0 12.3zM716 673c0 4.4-3.4 8-7.5 8h-185c-4.1 0-7.5-3.6-7.5-8v-48c0-4.4 3.4-8 7.5-8h185c4.1 0 7.5 3.6 7.5 8v48z">
+                                </path>
+                            </svg><span class="font-bold ml-2">Use at work</span></h4>
+                        <div class="flex flex-wrap gap-2 mb-12"><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">JavaScript</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">TypeScript</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">HTML</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">CSS</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">React</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Redux</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">NodeJS</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Express</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Postgres</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">MongoDB</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">GitHub</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Jira</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Heroku</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">AWS</span></div>
+                    </div>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+            <div class="relative overflow-hidden w-fit">
+                <div style="opacity: 1; transform: none;">
+                    <div>
+                        <h4 class="flex items-center mb-6"><svg stroke="currentColor" fill="currentColor"
+                                stroke-width="0" viewBox="0 0 1024 1024" class="text-indigo-500 text-2xl" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zM288 421a48.01 48.01 0 0 1 96 0 48.01 48.01 0 0 1-96 0zm224 272c-85.5 0-155.6-67.3-160-151.6a8 8 0 0 1 8-8.4h48.1c4.2 0 7.8 3.2 8.1 7.4C420 589.9 461.5 629 512 629s92.1-39.1 95.8-88.6c.3-4.2 3.9-7.4 8.1-7.4H664a8 8 0 0 1 8 8.4C667.6 625.7 597.5 693 512 693zm176-224a48.01 48.01 0 0 1 0-96 48.01 48.01 0 0 1 0 96z">
+                                </path>
+                            </svg><span class="font-bold ml-2">Use for fun</span></h4>
+                        <div class="flex flex-wrap gap-2 mb-12"><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Rust</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Tailwind</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Java</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Spring</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Figma</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Whimsical</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Planetscale</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">GraphQL</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">Python</span><span
+                                class="text-xs px-2 py-1 rounded bg-zinc-700">FastAPI</span></div>
+                    </div>
+                </div>
+                <div class="absolute bottom-1 left-0 right-0 top-1 z-20 bg-indigo-500" style="left: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</section>

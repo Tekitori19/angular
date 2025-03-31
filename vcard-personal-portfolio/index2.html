@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard - Personal Portfolio</title>
+
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<style>
+  /* Custom animations */
+  .fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
+
+<body class="bg-gradient-to-br from-gray-800 to-gray-900 text-white font-poppins">
+  <main class="flex">
+    <!-- Sidebar -->
+    <aside class="w-1/4 h-screen bg-gray-800 p-4 flex flex-col items-center">
+      <div class="mb-4">
+        <img src="./assets/images/my-avatar.png" alt="Richard hanrick" class="w-20 h-20 rounded-full">
+        <h1 class="text-xl mt-2">Richard hanrick</h1>
+        <p class="text-sm text-gray-400">Web developer</p>
+      </div>
+      <button class="mt-4 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">Show Contacts</button>
+      <ul class="mt-4 space-y-2">
+        <li class="flex items-center space-x-2">
+          <ion-icon name="mail-outline" class="text-yellow-500"></ion-icon>
+          <a href="mailto:richard@example.com" class="hover:underline">richard@example.com</a>
+        </li>
+        <li class="flex items-center space-x-2">
+          <ion-icon name="phone-portrait-outline" class="text-yellow-500"></ion-icon>
+          <a href="tel:+12133522795" class="hover:underline">+1 (213) 352-2795</a>
+        </li>
+        <li class="flex items-center space-x-2">
+          <ion-icon name="calendar-outline" class="text-yellow-500"></ion-icon>
+          <time datetime="1982-06-23">June 23, 1982</time>
+        </li>
+        <li class="flex items-center space-x-2">
+          <ion-icon name="location-outline" class="text-yellow-500"></ion-icon>
+          <address>Sacramento, California, USA</address>
+        </li>
+      </ul>
+      <ul class="flex space-x-4 mt-4">
+        <li><a href="#" class="text-yellow-500 hover:text-yellow-600"><ion-icon name="logo-facebook"></ion-icon></a></li>
+        <li><a href="#" class="text-yellow-500 hover:text-yellow-600"><ion-icon name="logo-twitter"></ion-icon></a></li>
+        <li><a href="#" class="text-yellow-500 hover:text-yellow-600"><ion-icon name="logo-instagram"></ion-icon></a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="w-3/4 p-8">
+      <!-- Navbar -->
+      <nav class="flex justify-around mb-8">
+        <button class="text-lg hover:text-yellow-500 transition">About</button>
+        <button class="text-lg hover:text-yellow-500 transition">Resume</button>
+        <button class="text-lg hover:text-yellow-500 transition">Portfolio</button>
+        <button class="text-lg hover:text-yellow-500 transition">Blog</button>
+        <button class="text-lg hover:text-yellow-500 transition">Contact</button>
+      </nav>
+
+      <!-- About Section -->
+      <section class="mb-8">
+        <h2 class="text-2xl mb-4">About me</h2>
+        <p class="mb-2">I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.</p>
+        <p>My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.</p>
+      </section>
+
+      <!-- Services Section -->
+      <section class="mb-8">
+        <h3 class="text-xl mb-4">What I'm doing</h3>
+        <ul class="grid grid-cols-2 gap-4">
+          <li class="flex items-center space-x-2">
+            <img src="./assets/images/icon-design.svg" alt="design icon" class="w-10">
+            <div>
+              <h4 class="text-lg">Web design</h4>
+              <p>The most modern and high-quality design made at a professional level.</p>
+            </div>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="./assets/images/icon-dev.svg" alt="Web development icon" class="w-10">
+            <div>
+              <h4 class="text-lg">Web development</h4>
+              <p>High-quality development of sites at the professional level.</p>
+            </div>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="./assets/images/icon-app.svg" alt="mobile app icon" class="w-10">
+            <div>
+              <h4 class="text-lg">Mobile apps</h4>
+              <p>Professional development of applications for iOS and Android.</p>
+            </div>
+          </li>
+          <li class="flex items-center space-x-2">
+            <img src="./assets/images/icon-photo.svg" alt="camera icon" class="w-10">
+            <div>
+              <h4 class="text-lg">Photography</h4>
+              <p>I make high-quality photos of any category at a professional level.</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section class="mb-8">
+        <h3 class="text-xl mb-4">Testimonials</h3>
+        <ul class="space-y-4">
+          <li class="bg-gray-700 p-4 rounded shadow">
+            <div class="flex items-center space-x-4">
+              <img src="./assets/images/avatar-1.png" alt="Daniel lewis" class="w-12 h-12 rounded-full">
+              <div>
+                <h4 class="text-lg">Daniel lewis</h4>
+                <p>Richard was hired to create a corporate identity. We were very pleased with the work done. She has a lot of experience and is very concerned about the needs of client.</p>
+              </div>
+            </div>
+          </li>
+          <!-- Additional testimonials can be added here -->
+        </ul>
+      </section>
+
+      <!-- Clients Section -->
+      <section class="mb-8">
+        <h3 class="text-xl mb-4">Clients</h3>
+        <ul class="flex space-x-4">
+          <li><img src="./assets/images/logo-1-color.png" alt="client logo" class="w-16"></li>
+          <li><img src="./assets/images/logo-2-color.png" alt="client logo" class="w-16"></li>
+          <li><img src="./assets/images/logo-3-color.png" alt="client logo" class="w-16"></li>
+          <!-- Additional client logos can be added here -->
+        </ul>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="mb-8">
+        <h3 class="text-xl mb-4">Contact</h3>
+        <div class="mb-4">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd" width="100%" height="300" class="rounded shadow"></iframe>
+        </div>
+        <form class="space-y-4">
+          <div class="flex space-x-4">
+            <input type="text" name="fullname" placeholder="Full name" class="w-1/2 p-2 rounded bg-gray-800 text-white">
+            <input type="email" name="email" placeholder="Email address" class="w-1/2 p-2 rounded bg-gray-800 text-white">
+          </div>
+          <textarea name="message" placeholder="Your Message" class="w-full p-2 rounded bg-gray-800 text-white"></textarea>
+          <button type="submit" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">Send Message</button>
+        </form>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="./assets/js/app.js"></script>
+
+</body>
+</html> 
