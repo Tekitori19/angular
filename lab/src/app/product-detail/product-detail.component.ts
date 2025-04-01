@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductModel } from '../product-card/product.model';
 import { ProductService } from '../services/product.service';
@@ -10,15 +10,23 @@ import { ProductService } from '../services/product.service';
     styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent implements OnInit {
-    route: ActivatedRoute = inject(ActivatedRoute);
-    id: string;
-    product!: ProductModel | undefined;
+    id: string = '';
+    product: ProductModel | undefined;
+    selectedColor: any;
 
-    constructor(private productService: ProductService) {
-        this.id = this.route.snapshot.params['id'];
+    constructor(
+        private route: ActivatedRoute,
+        private productService: ProductService
+    ) { }
+
+    ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this.product = this.productService.getProductById(this.id);
+        });
     }
 
-    ngOnInit() {
-        this.product = this.productService.getProductById(this.id);
+    selectColor(index: number) {
+        this.selectedColor = this.product?.colors[index];
     }
 }
