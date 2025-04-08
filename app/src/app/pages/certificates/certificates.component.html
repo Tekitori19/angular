@@ -1,0 +1,59 @@
+<!-- src/app/pages/certificates/certificates.component.html -->
+
+<!-- Loading/Error Handling -->
+<div *ngIf="isLoading" class="loading-indicator">Loading Certificates...</div>
+<div *ngIf="errorMessage && !isLoading" class="error-indicator">Error: {{ errorMessage }}</div>
+
+<!-- Sử dụng thẻ article và class active giống các trang khác -->
+<article class="certificates active" data-page="certificates" *ngIf="!isLoading && !errorMessage">
+
+    <header>
+        <h2 class="h2 article-title">Certificates & Courses</h2>
+    </header>
+
+    <!-- Container cho danh sách certificates -->
+    <section class="certificates-list-section">
+        <ng-container *ngIf="(certificates$ | async) as certificates; else noCertificates">
+            <ng-container *ngIf="certificates.length > 0; else noCertificates">
+                <!-- Có thể dùng <ul> hoặc grid layout tùy ý -->
+                <ul class="certificates-list" style="list-style: none; padding: 0; display: grid; gap: 20px;">
+                     <!-- Bạn có thể dùng grid-template-columns: 1fr 1fr; để hiển thị 2 cột trên màn hình lớn -->
+                    <li class="certificate-item" *ngFor="let cert of certificates" style="background: var(--eerie-black-1); border: 1px solid var(--jet); border-radius: 14px; padding: 20px;">
+                        <!-- Link đến trang chi tiết certificate -->
+                        <a [routerLink]="['/certificates', cert.id]" style="text-decoration: none; color: inherit; display: block;">
+                            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                <!-- Ảnh logo tổ chức hoặc ảnh chứng chỉ (nếu có) -->
+                                <figure *ngIf="cert.image_url" style="flex-shrink: 0; width: 60px; height: 60px; border-radius: 8px; overflow:hidden; background-color: var(--onyx);">
+                                     <img [src]="cert.image_url" [alt]="cert.issuing_organization + ' logo'" style="width: 100%; height: 100%; object-fit: contain;">
+                                </figure>
+                                <!-- Hoặc icon mặc định -->
+                                 <div *ngIf="!cert.image_url" class="icon-box" style="width: 48px; height: 48px; font-size: 20px;">
+                                    <ion-icon name="ribbon-outline"></ion-icon>
+                                 </div>
+
+                                 <div style="flex-grow: 1;">
+                                    <!-- Tên chứng chỉ làm tiêu đề chính -->
+                                     <h4 class="h4" style="color: var(--white-2); margin-bottom: 5px;">{{ cert.name }}</h4>
+                                     <!-- Tổ chức cấp -->
+                                     <p style="font-size: var(--fs-7); color: var(--light-gray-70);">Issued by: {{ cert.issuing_organization }}</p>
+                                     <!-- Ngày cấp -->
+                                     <p style="font-size: var(--fs-8); color: var(--vegas-gold); margin-top: 3px;">Issued: {{ cert.issue_date | date:'MMMM yyyy' }}</p>
+                                  </div>
+                            </div>
+                            <!-- Mô tả ngắn (nếu có) -->
+                            <p *ngIf="cert.description" style="font-size: var(--fs-6); color: var(--light-gray); line-height: 1.6; margin-bottom: 10px;">
+                                {{ cert.description }}
+                            </p>
+                            <!-- Thêm dấu hiệu có thể click -->
+                            <span style="font-size: var(--fs-8); color: var(--orange-yellow-crayola); display:inline-block; margin-top: 5px;">View Details →</span>
+                        </a>
+                    </li>
+                </ul>
+            </ng-container>
+         </ng-container>
+        <ng-template #noCertificates>
+            <p>No certificates or completed courses to display yet.</p>
+        </ng-template>
+    </section>
+
+</article>

@@ -15,6 +15,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { CommonModule } from '@angular/common';
 import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
 import { CertificateDetailComponent } from './pages/certificate-detail/certificate-detail.component';
+import { CertificatesComponent } from './pages/certificates/certificates.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
@@ -28,6 +29,7 @@ import { CertificateDetailComponent } from './pages/certificate-detail/certifica
         ContactComponent,
         ProjectDetailComponent,
         CertificateDetailComponent,
+        CertificatesComponent,
     ],
     imports: [
         BrowserModule,

@@ -2184,3 +2184,353 @@ body.modal-active {
   text-align: left; /* Canh lề trái cho lỗi validation */
   padding: 5px 8px;
 }
+
+/* Header styling */
+.project-meta-info {
+  margin-bottom: 25px;
+  color: var(--light-gray-70);
+  font-size: var(--fs-7);
+  display: flex; /* Sắp xếp các mục thông tin meta */
+  gap: 20px; /* Khoảng cách giữa category và ngày */
+  flex-wrap: wrap; /* Xuống dòng nếu không đủ chỗ */
+}
+
+.project-meta-info span {
+  display: inline-flex; /* Để icon (nếu có) thẳng hàng */
+  align-items: center;
+  gap: 5px;
+}
+
+/* Banner Image Styling */
+.project-detail-banner {
+  margin-bottom: 30px;
+  border-radius: 16px;
+  overflow: hidden; /* Đảm bảo ảnh được cắt theo bo góc */
+  border: 1px solid var(--jet); /* Thêm viền giống các thành phần khác */
+}
+
+.project-detail-banner img {
+  width: 100%;
+  height: auto; /* Giữ tỷ lệ ảnh */
+  display: block; /* Loại bỏ khoảng trắng thừa dưới ảnh */
+}
+
+/* Content Section Styling */
+.project-detail-content {
+  color: var(--light-gray);
+  font-weight: var(--fw-300);
+  line-height: 1.6;
+}
+
+/* Section Headers (Description, Technologies) */
+.project-detail-content h3 {
+  color: var(--white-2);
+  margin-bottom: 15px; /* Khoảng cách dưới tiêu đề section */
+  padding-bottom: 5px; /* Gạch chân giả */
+  border-bottom: 2px solid var(--jet); /* Gạch chân giả */
+  display: inline-block; /* Để border-bottom vừa với chữ */
+}
+
+/* Description Paragraphs */
+.project-detail-content [innerHTML] p,
+.project-detail-content > p { /* Style cho các thẻ p mô tả */
+  margin-bottom: 1.2em; /* Khoảng cách giữa các đoạn */
+}
+/* Khoảng cách cuối cùng trước section mới */
+.project-detail-content > div:has(h3) {
+    margin-bottom: 30px;
+}
+
+/* Technology List Styling */
+.tech-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Khoảng cách giữa các tag tech */
+  margin-bottom: 30px; /* Khoảng cách với phần links */
+}
+
+.tech-list li {
+  background: var(--onyx);
+  color: var(--light-gray);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: var(--fs-7);
+  border: 1px solid var(--jet);
+  white-space: nowrap; /* Ngăn tech tag xuống dòng */
+}
+
+/* Project Links Styling */
+.project-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; /* Cho phép nút xuống dòng trên màn hình nhỏ */
+  margin-bottom: 35px;
+  margin-top: 10px; /* Khoảng cách trên với tech list/description */
+}
+
+/* Style chung cho các nút link (kế thừa từ .form-btn hoặc tạo mới) */
+.project-link-btn {
+  /* Kế thừa style từ .form-btn hoặc định nghĩa lại */
+  /* Ví dụ: */
+  position: relative;
+  display: inline-flex; /* Sử dụng inline-flex */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px; /* Điều chỉnh padding nếu cần */
+  border-radius: 12px; /* Đồng bộ bo góc */
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  text-transform: capitalize;
+  box-shadow: var(--shadow-3);
+  z-index: 1;
+  transition: var(--transition-1);
+  text-decoration: none; /* Bỏ gạch chân */
+  border: none; /* Bỏ border mặc định */
+  cursor: pointer;
+}
+
+.project-link-btn::before { /* Lớp gradient nền */
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  z-index: -1;
+  transition: var(--transition-1);
+}
+
+.project-link-btn ion-icon {
+  font-size: 1.1em; /* Chỉnh size icon */
+}
+
+/* Style riêng cho nút Live Demo */
+.project-link-btn.live-demo {
+  background: var(--border-gradient-onyx);
+  color: var(--orange-yellow-crayola);
+}
+.project-link-btn.live-demo::before {
+  background: var(--bg-gradient-jet);
+}
+.project-link-btn.live-demo:hover {
+  background: var(--bg-gradient-yellow-1);
+}
+.project-link-btn.live-demo:hover::before {
+  background: var(--bg-gradient-yellow-2);
+}
+
+/* Style riêng cho nút Source Code */
+.project-link-btn.source-code {
+   background: var(--onyx); /* Nền tối hơn */
+   color: var(--light-gray);
+   border: 1px solid var(--jet); /* Thêm viền */
+}
+.project-link-btn.source-code::before{
+    display: none; /* Không cần lớp gradient */
+}
+
+.project-link-btn.source-code:hover {
+  background: hsl(240, 1%, 25%); /* Sáng hơn một chút khi hover */
+  color: var(--white-1);
+  border-color: hsl(0, 0%, 30%);
+}
+
+
+/* Back Link Styling */
+.back-link {
+  margin-top: 30px; /* Khoảng cách với phần trên */
+  padding-top: 20px; /* Khoảng cách và đường kẻ giả */
+  border-top: 1px solid var(--jet); /* Đường kẻ phân cách */
+}
+
+.back-link a {
+  color: var(--orange-yellow-crayola);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-6);
+  transition: var(--transition-1);
+}
+
+.back-link a:hover {
+  color: var(--vegas-gold); /* Màu nhạt hơn khi hover */
+  gap: 8px; /* Icon dịch ra một chút */
+}
+
+.back-link a ion-icon {
+  font-size: 1.2em; /* Icon to hơn một chút */
+}
+
+/* src/app/pages/certificate-detail/certificate-detail.component.css */
+
+/* Kế thừa style article chung nếu cần */
+/* article.certificate-details {} */
+
+/* Header Styling */
+.certificate-header { /* Container cho thông tin header */
+   margin-bottom: 30px; /* Khoảng cách với phần content */
+   padding-bottom: 20px;
+   border-bottom: 1px solid var(--jet);
+}
+
+.certificate-org {
+  font-size: var(--fs-6);
+  color: var(--light-gray-70);
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+.certificate-date {
+  font-size: var(--fs-7);
+  color: var(--vegas-gold);
+}
+
+.certificate-date span { /* Style cho ngày hết hạn */
+    margin-left: 10px;
+    color: var(--light-gray-70);
+    font-style: italic;
+}
+
+
+/* Content Section Styling */
+.certificate-detail-content {
+  color: var(--light-gray);
+  font-weight: var(--fw-300);
+  line-height: 1.6;
+  display: flex; /* Layout flex để ảnh và text có thể xếp cạnh nhau */
+  flex-direction: column; /* Mặc định xếp chồng lên */
+  gap: 30px; /* Khoảng cách giữa ảnh và text/links */
+}
+
+/* Ảnh chứng chỉ */
+.certificate-image {
+  flex-shrink: 0; /* Không co lại */
+  max-width: 100%; /* Giới hạn chiều rộng */
+  width: auto; /* Cho phép thay đổi theo màn hình nhỏ */
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--jet);
+  margin: 0 auto; /* Căn giữa ảnh nếu cần */
+}
+
+@media (min-width: 768px) { /* Trên màn hình lớn hơn */
+    .certificate-detail-content {
+        flex-direction: row; /* Xếp ảnh và text ngang hàng */
+         align-items: flex-start; /* Căn lề trên */
+    }
+     .certificate-image {
+         max-width: 300px; /* Giới hạn chiều rộng ảnh */
+         margin: 0; /* Bỏ căn giữa */
+     }
+     .certificate-text-content {
+        flex-grow: 1; /* Phần text chiếm phần còn lại */
+     }
+}
+
+.certificate-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Section Headers (Details/Skills) */
+.certificate-detail-content h3 {
+  color: var(--white-2);
+  margin-bottom: 10px;
+}
+
+/* Description/Details Paragraphs */
+.certificate-detail-content [innerHTML] p,
+.certificate-detail-content > div > p {
+    margin-bottom: 1em;
+}
+
+/* Credential Links/ID */
+.certificate-links {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--jet); /* Phân cách với description */
+  display: flex;
+  flex-direction: column; /* Xếp chồng ID và link */
+  gap: 15px;
+  align-items: flex-start; /* Căn lề trái */
+}
+
+.certificate-links p { /* Style cho Credential ID */
+    font-size: var(--fs-7);
+    color: var(--light-gray);
+    word-break: break-all; /* Ngắt chữ nếu ID quá dài */
+}
+
+/* Tái sử dụng style nút từ project detail hoặc định nghĩa lại */
+.certificate-links .credential-link-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: var(--fs-6);
+    font-weight: var(--fw-500);
+    background: var(--border-gradient-onyx);
+    color: var(--orange-yellow-crayola);
+    box-shadow: var(--shadow-3);
+    transition: var(--transition-1);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+.certificate-links .credential-link-btn::before{
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-gradient-jet);
+    border-radius: inherit;
+    z-index: -1;
+    transition: var(--transition-1);
+}
+.certificate-links .credential-link-btn:hover {
+    background: var(--bg-gradient-yellow-1);
+}
+.certificate-links .credential-link-btn:hover::before {
+    background: var(--bg-gradient-yellow-2);
+}
+.credential-link-btn ion-icon {
+  font-size: 1.1em;
+}
+
+
+/* Back Link Styling (tương tự project detail) */
+.back-link {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--jet);
+}
+
+.back-link a {
+  color: var(--orange-yellow-crayola);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-6);
+  transition: var(--transition-1);
+}
+
+.back-link a:hover {
+  color: var(--vegas-gold);
+  gap: 8px;
+}
+
+.back-link a ion-icon {
+  font-size: 1.2em;
+}
+
+/* Thêm class này cho thẻ article trong certificate-detail.component.html */
+/* Hoặc bỏ class 'active' nếu không cần */
+article.certificate-details.active {
+  display: block; /* Đảm bảo nó hiển thị */
+}

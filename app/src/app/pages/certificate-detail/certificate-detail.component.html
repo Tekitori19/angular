@@ -1,1 +1,49 @@
-<p>certificate-detail works!</p>
+<!-- src/app/pages/certificate-detail/certificate-detail.component.html -->
+
+<!-- Loading/Error Handling -->
+<div *ngIf="isLoading" class="loading-indicator">Loading certificate details...</div>
+<div *ngIf="errorMessage && !isLoading" class="error-indicator"> Error: {{ errorMessage }} <p><a routerLink="/certificates">Back to Certificates</a></p> </div>
+
+<!-- Nội dung -->
+<div *ngIf="!isLoading && !errorMessage && certificate">
+  <article class="certificate-details active" data-page="certificate-detail"> <!-- <<< Class certificate-details và active -->
+    <header class="certificate-header"> <!-- <<< Class header -->
+      <h2 class="h2 article-title">{{ certificate.name }}</h2>
+      <p class="certificate-org">Issued by: <strong>{{ certificate.issuing_organization }}</strong></p> <!-- <<< Class org -->
+      <p class="certificate-date"> <!-- <<< Class date -->
+        Issued on: {{ certificate.issue_date | date:'dd MMMM, yyyy' }}
+        <span *ngIf="certificate.expiration_date"> - Expires on: {{ certificate.expiration_date | date:'dd MMMM, yyyy' }}</span>
+      </p>
+    </header>
+
+    <section class="certificate-detail-content">
+      <!-- Ảnh -->
+      <figure *ngIf="certificate.image_url" class="certificate-image"> <!-- <<< Class image -->
+        <img [src]="certificate.image_url" [alt]="certificate.name + ' certificate image'">
+      </figure>
+
+      <!-- Text content (description, links) bao bọc trong div để flex layout hoạt động -->
+      <div class="certificate-text-content">
+        <!-- Description -->
+        <div *ngIf="certificate.description">
+          <h3 class="h3">Details / Skills</h3> <!-- <<< Class h3 -->
+          <div [innerHTML]="formatDescription(certificate.description)"></div>
+        </div>
+
+        <!-- Credential Links/ID -->
+        <div class="certificate-links" *ngIf="certificate.credential_id || certificate.credential_url"> <!-- <<< Class links -->
+          <p *ngIf="certificate.credential_id"><strong>Credential ID:</strong> {{ certificate.credential_id }}</p>
+          <a *ngIf="certificate.credential_url" [href]="certificate.credential_url" target="_blank" class="credential-link-btn"> <!-- <<< Class button -->
+            <ion-icon name="open-outline"></ion-icon> <span>View Credential</span>
+          </a>
+        </div>
+      </div> <!-- <<< Đóng certificate-text-content -->
+    </section>
+
+    <!-- Back Link -->
+    <p class="back-link"> <!-- <<< Class back-link -->
+      <a routerLink="/certificates"> <ion-icon name="arrow-back-outline"></ion-icon> Back to Certificates</a> <!-- <<< Đổi link nếu cần -->
+    </p>
+
+  </article>
+</div>

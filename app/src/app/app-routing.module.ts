@@ -8,6 +8,7 @@ import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
 import { ResumeComponent } from './pages/resume/resume.component';
 import { CertificateDetailComponent } from './pages/certificate-detail/certificate-detail.component';
+import { CertificatesComponent } from './pages/certificates/certificates.component';
 // Chúng ta sẽ import ProjectDetailComponent và CertificateDetailComponent sau
 
 const routes: Routes = [
@@ -29,6 +30,11 @@ const routes: Routes = [
         component: PortfolioComponent,
         title: 'Portfolio - Portfolio'
     },
+    {
+        path: 'certificates', // Đường dẫn URL: /certificates
+        component: CertificatesComponent, // Component hiển thị danh sách
+        title: 'Certificates - Portfolio'
+    },
     // Route cho trang 'Contact'
     {
         path: 'contact',
@@ -49,9 +55,9 @@ const routes: Routes = [
         title: 'Project Details'
     },
     {
-        path: 'certificates/:id', // <<< Đã có
-        component: CertificateDetailComponent,
-        title: 'Certificate Details'
+        path: 'certificates/:id', // Đường dẫn URL /certificates/ seguido del ID
+        component: CertificateDetailComponent, // Component tương ứng
+        title: 'Certificate Details' // Tiêu đề trang
     },
     // Route Wildcard (cho các URL không hợp lệ)
     // Chuyển hướng tất cả các URL không khớp về trang '/about'.

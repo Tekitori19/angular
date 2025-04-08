@@ -1,1 +1,53 @@
-<p>project-detail works!</p>
+<!-- src/app/pages/project-detail/project-detail.component.html -->
+
+<!-- Loading/Error -->
+<div *ngIf="isLoading" class="loading-indicator">Loading project details...</div>
+<div *ngIf="errorMessage && !isLoading" class="error-indicator"> Error: {{ errorMessage }} <p><a routerLink="/portfolio">Back to Portfolio</a></p> </div>
+
+<!-- Nội dung -->
+<div *ngIf="!isLoading && !errorMessage && project">
+    <article class="project-details active" data-page="project-detail"> <!-- <<< Dùng class project-details -->
+
+        <header>
+            <h2 class="h2 article-title">{{ project.title }}</h2>
+             <div class="project-meta-info"> <!-- <<< Class cho meta -->
+               <span *ngIf="project.category_name">Category: {{ project.category_name }}</span>
+               <span *ngIf="project.date_completed">Completed: {{ project.date_completed | date:'MMMM yyyy' }}</span>
+             </div>
+        </header>
+
+        <figure class="project-detail-banner" *ngIf="project.thumbnail_image_url">
+          <img [src]="project.thumbnail_image_url" [alt]="project.title + ' banner'">
+        </figure>
+
+        <section class="project-detail-content">
+
+            <h3 class="h3">Description</h3> <!-- <<< Giữ class h3 -->
+            <div [innerHTML]="formatDescription(project?.description) || 'No description available.'"></div>
+
+             <div *ngIf="getTechnologies().length > 0">
+                <h3 class="h3">Technologies Used</h3> <!-- <<< Giữ class h3 -->
+                <ul class="tech-list"> <!-- <<< Class cho list -->
+                    <li *ngFor="let tech of getTechnologies()">{{ tech }}</li>
+                 </ul>
+             </div>
+
+             <div class="project-links"> <!-- <<< Class cho link container -->
+                 <a *ngIf="project.project_url" [href]="project.project_url" target="_blank"
+                    class="project-link-btn live-demo"> <!-- <<< Class cho nút -->
+                     <ion-icon name="eye-outline"></ion-icon> <span>View Live Demo</span>
+                 </a>
+                  <a *ngIf="project.source_code_url" [href]="project.source_code_url" target="_blank"
+                     class="project-link-btn source-code"> <!-- <<< Class cho nút -->
+                      <ion-icon name="logo-github"></ion-icon> <span>View Source Code</span>
+
+                  </a>
+             </div>
+
+            <p class="back-link"> <!-- <<< Class cho back link -->
+                <a routerLink="/portfolio"> <ion-icon name="arrow-back-outline"></ion-icon> Back to Portfolio</a>
+            </p>
+
+        </section>
+    </article>
+</div>
