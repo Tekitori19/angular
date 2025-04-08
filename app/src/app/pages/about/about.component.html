@@ -10,8 +10,7 @@
 
 <!-- Hiển thị Nội dung Trang khi không loading và không lỗi -->
 <!-- Bỏ thẻ <article> bên ngoài đi nếu component cha đã có, giữ lại nếu cần -->
-<div *ngIf="!isLoading && !errorMessage"> <!-- Container chính cho nội dung -->
-
+<article class="portfolio active" data-page="portfolio" *ngIf="!isLoading && !errorMessage">
     <header>
         <h2 class="h2 article-title">About me</h2>
     </header>
@@ -123,4 +122,4 @@
         <ng-template #noClients><p>No clients to display yet.</p></ng-template>
     </section>
 
-</div> <!-- Đóng container chính -->
+</article> <!-- Đóng container chính -->

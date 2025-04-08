@@ -1,8 +1,6 @@
 // src/app/pages/portfolio/portfolio.component.ts
 import { Component, OnInit } from '@angular/core';
-// Import nhiều hơn từ RxJS: BehaviorSubject, combineLatest
-import { Observable, map, catchError, of, tap, BehaviorSubject, combineLatest, startWith } from 'rxjs';
-// Import interfaces
+import { Observable, map, catchError, of, BehaviorSubject, combineLatest, startWith, tap } from 'rxjs'; // Đảm bảo import đủ
 import { DataService, Project, ProjectCategory } from '../../services/data.service';
 
 @Component({
@@ -17,75 +15,99 @@ export class PortfolioComponent implements OnInit {
     projects$: Observable<Project[]> = of([]);
     categories$: Observable<ProjectCategory[]> = of([]);
 
-    // BehaviorSubject để quản lý category đang được chọn filter
-    // Bắt đầu với giá trị 'all'
+    // BehaviorSubject quản lý slug của category đang được filter
     private selectedCategorySlug = new BehaviorSubject<string>('all');
-    // Observable công khai cho category đang chọn
+    // Observable công khai cho category slug đang được filter (dùng trong template để highlight)
     selectedCategorySlug$: Observable<string> = this.selectedCategorySlug.asObservable();
 
-    // Observable cho danh sách dự án đã được filter
+    // Observable chứa danh sách projects đã được filter
     filteredProjects$: Observable<Project[]> = of([]);
 
-    isLoading = true;
-    errorMessage: string | null = null;
+    isLoading = true; // Cờ cho trạng thái loading ban đầu
+    errorMessage: string | null = null; // Lưu trữ thông báo lỗi
 
     constructor(private dataService: DataService) { }
 
     ngOnInit(): void {
         this.isLoading = true;
         this.errorMessage = null;
-        console.log("PortfolioComponent ngOnInit: Fetching data...");
+        // console.log("Portfolio ngOnInit: Initializing."); // Có thể giữ lại log này nếu muốn
 
         const portfolioData$ = this.dataService.getPortfolioData();
 
-        // Lấy danh sách dự án và danh mục gốc
-        this.projects$ = portfolioData$.pipe(map(data => data?.projects || []));
-        this.categories$ = portfolioData$.pipe(map(data => data?.projectCategories || []));
-
-        // --- Logic Lọc Dự án ---
-        // Sử dụng combineLatest để kết hợp danh sách dự án gốc và category đang chọn
-        this.filteredProjects$ = combineLatest([
-            this.projects$, // Nguồn: Danh sách tất cả dự án
-            this.selectedCategorySlug$ // Nguồn: Category slug đang được chọn (thay đổi khi user click filter)
-        ]).pipe(
-            map(([projects, selectedSlug]) => { // Nhận giá trị từ cả hai nguồn
-                console.log(`Filtering projects by slug: ${selectedSlug}`);
-                if (selectedSlug === 'all' || !selectedSlug) {
-                    return projects; // Nếu chọn 'All' hoặc không có slug, trả về tất cả
-                }
-                // Lọc danh sách dự án dựa trên category_slug
-                return projects.filter(project => project.category_slug === selectedSlug);
-            }),
-            // Bắt lỗi nếu có lỗi xảy ra trong quá trình lấy projects$ hoặc combineLatest
+        // Lấy danh sách projects và categories gốc từ service
+        this.projects$ = portfolioData$.pipe(
+            map(data => data?.projects || []),
+            tap(projects => console.log("Portfolio ngOnInit: Mapped projects$ >>>", projects)), // <<< XEM KỸ LOG NÀY
+            catchError(err => { // Thêm catchError riêng cho projects$ nếu cần debug kỹ hơn
+                console.error("Error mapping projects:", err);
+                return of([]);
+            })
+        );
+        this.categories$ = portfolioData$.pipe(
+            map(data => data?.projectCategories || []),
+            tap(categories => console.log("Portfolio ngOnInit: Mapped categories$ >>>", categories)), // <<< KIỂM TRA LOG NÀY
             catchError(err => {
-                console.error("PortfolioComponent Error filtering projects:", err);
-                this.errorMessage = `Error filtering projects: ${err.message}`;
-                return of([]); // Trả về mảng rỗng khi có lỗi lọc
+                console.error("Error mapping categories:", err);
+                return of([]);
             })
         );
 
-        // Xử lý loading/error chung (tương tự các component khác)
+        this.filteredProjects$ = combineLatest([
+            this.projects$, // <<< Phải chắc chắn có dữ liệu từ Bước 1
+            this.selectedCategorySlug$.pipe(startWith('all'))
+        ]).pipe(
+            tap(([projects, slug]) => console.log(`Portfolio Filter INPUT: Projects Count = ${projects?.length}, Slug = '${slug}'`)), // <<< LOG ĐẦU VÀO
+            map(([projects, selectedSlug]) => {
+                if (selectedSlug === 'all' || !selectedSlug) {
+                    console.log("Portfolio Filter: Returning ALL projects."); // LOG trường hợp ALL
+                    return projects;
+                }
+                // BỎ COMMENT LOG NÀY để xem các slug thực tế đang được so sánh
+                // console.log("Projects for filtering:", projects.map(p => ({ title: p.title, category_slug: p.category_slug })));
+                // console.log(`Filtering for slug: '${selectedSlug}'`);
+
+                const filtered = projects.filter(project => {
+                    // So sánh cẩn thận, có thể thêm .trim() hoặc toLowerCase() nếu cần
+                    const projectSlug = project.category_slug?.trim().toLowerCase();
+                    const filterSlug = selectedSlug.trim().toLowerCase();
+                    // console.log(`Comparing: '${projectSlug}' === '${filterSlug}' for project '${project.title}'`);
+                    return projectSlug === filterSlug;
+                });
+
+                console.log(`Portfolio Filter OUTPUT: Found ${filtered?.length} projects.`); // <<< LOG KẾT QUẢ LỌC
+                return filtered;
+            }),
+            catchError(err => {
+                console.error("PortfolioComponent Error filtering projects:", err);
+                this.errorMessage = `Error filtering projects: ${err.message}`;
+                return of([]);
+            })
+        );
+
+        // Log giá trị cuối cùng mà filteredProjects$ phát ra
+        this.filteredProjects$.subscribe(finalFiltered => console.log("Portfolio FINAL filteredProjects$ value:", finalFiltered)); // <<< LOG KẾT QUẢ CUỐI
+
+        // Xử lý trạng thái loading/error chung khi dữ liệu portfolio gốc được resolve
         portfolioData$.subscribe({
-            next: (data) => {
-                console.log("PortfolioComponent ngOnInit: Data received successfully.");
-                this.isLoading = false;
+            next: () => {
+                // console.log("Portfolio ngOnInit: portfolioData$ resolved."); // Log nếu cần
+                this.isLoading = false; // Dừng loading khi thành công
             },
             error: (err) => {
-                console.error("PortfolioComponent ngOnInit: Error fetching data:", err);
-                this.errorMessage = err.message || 'Failed to load Portfolio data.';
-                this.isLoading = false;
+                console.error("PortfolioComponent ngOnInit: portfolioData$ error:", err);
+                this.errorMessage = `Failed to load portfolio data: ${err.message}`;
+                this.isLoading = false; // Dừng loading khi có lỗi
             }
         });
     } // Kết thúc ngOnInit
 
     /**
-     * Hàm được gọi khi người dùng click vào một nút filter category.
-     * Cập nhật giá trị cho BehaviorSubject 'selectedCategorySlug'.
-     * @param categorySlug Slug của category được chọn ('all' hoặc slug cụ thể).
+     * Cập nhật slug của category cần filter.
+     * @param categorySlug Slug của category ('all' hoặc slug cụ thể).
      */
     selectCategory(categorySlug: string): void {
-        console.log(`Category selected: ${categorySlug}`);
-        this.selectedCategorySlug.next(categorySlug); // Phát ra giá trị slug mới
-        // filteredProjects$ sẽ tự động cập nhật nhờ combineLatest
+        this.selectedCategorySlug.next(categorySlug); // Phát giá trị mới cho BehaviorSubject
+        // `filteredProjects$` sẽ tự động cập nhật
     }
-} // Kết thúc class
+}

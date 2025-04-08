@@ -182,7 +182,7 @@ export class DataService {
             this.portfolioDataCache$ = this.http.get<PortfolioData>(`${this.apiUrl}/portfolio-data`)
                 .pipe(
                     // Sử dụng 'tap' để thực hiện "side effect" như logging mà không thay đổi dữ liệu
-                    tap(data => console.log('DataService: API response received.', data)),
+                    tap(data => console.log('SERVICE: API response RAW:', data)),
 
                     // Sử dụng 'shareReplay(1)' để:
                     // 1. Chia sẻ kết quả của Observable này cho tất cả các subscriber.
