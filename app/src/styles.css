@@ -2159,3 +2159,28 @@ body.modal-active {
 .modal-container.active {
   display: flex; /* Hiển thị modal khi có class active */
 }
+
+/* Ví dụ style cho thông báo */
+.submit-message {
+  padding: 10px 15px;
+  margin-top: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.success-message {
+  background-color: hsla(120, 60%, 90%, 0.9); /* Màu xanh lá nhạt */
+  color: hsl(120, 80%, 25%); /* Màu xanh lá đậm */
+  border: 1px solid hsl(120, 60%, 70%);
+}
+
+.error-message { /* Class này có thể dùng cho cả validation và submit error */
+  background-color: hsla(0, 70%, 93%, 0.9); /* Màu đỏ nhạt */
+  color: hsl(0, 60%, 40%); /* Màu đỏ đậm */
+  border: 1px solid hsl(0, 60%, 80%);
+  font-size: var(--fs-8); /* Chỉnh cỡ chữ nếu cần */
+  margin-top: 5px; /* Khoảng cách với input */
+  text-align: left; /* Canh lề trái cho lỗi validation */
+  padding: 5px 8px;
+}

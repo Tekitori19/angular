@@ -1,1 +1,81 @@
-<p>contact works!</p>
+<!-- src/app/pages/contact/contact.component.html -->
+
+<!-- Giả sử component này cũng cần class active -->
+<article class="contact active" data-page="contact">
+
+  <header>
+    <h2 class="h2 article-title">Contact</h2>
+  </header>
+
+  <!-- Có thể bỏ mapbox nếu không dùng -->
+  <!-- <section class="mapbox" data-mapbox> ... </section> -->
+
+  <section class="contact-form">
+    <h3 class="h3 form-title">Contact Form</h3>
+
+    <!-- Form binding -->
+    <form action="#" class="form" [formGroup]="contactForm" (ngSubmit)="onSubmit()" data-form>
+
+      <div class="input-wrapper">
+        <!-- Full Name Input + Validation -->
+        <div> <!-- Bao bọc input và lỗi -->
+          <input type="text" name="fullname" class="form-input" placeholder="Full name *" required
+                 formControlName="fullname"
+                 [class.invalid]="fullname?.invalid && (fullname?.dirty || fullname?.touched)">
+          <div *ngIf="fullname?.invalid && (fullname?.dirty || fullname?.touched)" class="error-message">
+            <span *ngIf="fullname?.errors?.['required']">Full name is required.</span>
+          </div>
+        </div>
+
+        <!-- Email Input + Validation -->
+        <div>
+          <input type="email" name="email" class="form-input" placeholder="Email address *" required
+                 formControlName="email"
+                 [class.invalid]="email?.invalid && (email?.dirty || email?.touched)">
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+            <span *ngIf="email?.errors?.['required']">Email is required.</span>
+            <span *ngIf="email?.errors?.['email']">Please enter a valid email.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject Input (Optional) -->
+      <div>
+        <input type="text" name="subject" class="form-input" placeholder="Subject (Optional)"
+               formControlName="subject">
+        <!-- Không cần validation -->
+      </div>
+
+
+      <!-- Message Textarea + Validation -->
+      <div>
+        <textarea name="message" class="form-input" placeholder="Your Message *" required
+                  formControlName="message"
+                  [class.invalid]="message?.invalid && (message?.dirty || message?.touched)"
+                  style="margin-top: 30px;"></textarea>
+        <div *ngIf="message?.invalid && (message?.dirty || message?.touched)" class="error-message">
+          <span *ngIf="message?.errors?.['required']">Message is required.</span>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="form-btn" type="submit" [disabled]="isSubmitting || contactForm.invalid" data-form-btn>
+        <ion-icon name="paper-plane"></ion-icon>
+        <span>{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
+      </button>
+
+    </form>
+
+    <!-- Submit Status Message -->
+    <!-- Hiển thị khi submitStatus có giá trị (khác null) -->
+    <div *ngIf="submitStatus" class="submit-message"
+         [ngClass]="{
+            'success-message': submitStatus === 'success',
+            'error-message': submitStatus === 'error'
+         }">
+      {{ submitMessage }}
+    </div>
+
+  </section> <!-- End contact-form section -->
+
+</article> <!-- End contact article -->
