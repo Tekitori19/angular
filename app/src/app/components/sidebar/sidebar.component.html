@@ -1,0 +1,89 @@
+<!-- src/app/components/sidebar/sidebar.component.html -->
+
+<!-- Dùng *ngIf và async pipe để hiển thị khi có dữ liệu profile -->
+<aside class="sidebar" data-sidebar *ngIf="profile$ | async as profile; else loadingProfile">
+
+  <div class="sidebar-info">
+    <figure class="avatar-box">
+      <!-- Lấy avatar_image_url từ profile -->
+      <img [src]="profile.avatar_image_url || './assets/images/default-avatar.png'" [alt]="profile.full_name" width="80">
+    </figure>
+
+    <div class="info-content">
+      <!-- Lấy full_name và job_title từ profile -->
+      <h1 class="name" [title]="profile.full_name">{{ profile.full_name }}</h1>
+      <p class="title">{{ profile.job_title }}</p>
+    </div>
+
+    <!-- Nút Show/Hide Contacts -->
+    <!-- Gọi hàm toggleContacts() khi click -->
+    <button class="info_more-btn" data-sidebar-btn (click)="toggleContacts()">
+      <span>{{ showContacts ? 'Hide Contacts' : 'Show Contacts' }}</span>
+      <!-- Thay đổi icon dựa vào showContacts -->
+      <ion-icon [name]="showContacts ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+       <!-- Lưu ý: Cần import ionicons vào index.html hoặc cài đặt thư viện ionicons cho Angular -->
+    </button>
+  </div>
+
+  <!-- Phần contact details, chỉ hiện khi showContacts là true -->
+  <!-- Dùng [class.active] để thêm class khi showContacts=true (CSS của bạn cần định nghĩa class .active) -->
+  <div class="sidebar-info_more" [class.active]="showContacts">
+    <div class="separator"></div>
+
+    <!-- Hiển thị thông tin liên hệ từ profile -->
+    <ul class="contacts-list">
+      <li class="contact-item" *ngIf="profile.email">
+        <div class="icon-box"> <ion-icon name="mail-outline"></ion-icon> </div>
+        <div class="contact-info">
+          <p class="contact-title">Email</p>
+          <a [href]="'mailto:' + profile.email" class="contact-link">{{ profile.email }}</a>
+        </div>
+      </li>
+      <li class="contact-item" *ngIf="profile.phone">
+        <div class="icon-box"> <ion-icon name="phone-portrait-outline"></ion-icon> </div>
+        <div class="contact-info">
+          <p class="contact-title">Phone</p>
+          <a [href]="'tel:' + profile.phone" class="contact-link">{{ profile.phone }}</a>
+        </div>
+      </li>
+      <li class="contact-item" *ngIf="profile.birthday">
+        <div class="icon-box"> <ion-icon name="calendar-outline"></ion-icon> </div>
+        <div class="contact-info">
+          <p class="contact-title">Birthday</p>
+          <!-- Định dạng lại ngày tháng nếu cần dùng DatePipe -->
+          <time [attr.datetime]="profile.birthday">{{ profile.birthday | date:'dd/MM/yyyy' }}</time>
+          <!-- Hoặc giữ nguyên nếu backend trả về dạng dd/MM/yyyy: <time [attr.datetime]="profile.birthday">{{ profile.birthday }}</time> -->
+        </div>
+      </li>
+      <li class="contact-item" *ngIf="profile.address">
+        <div class="icon-box"> <ion-icon name="location-outline"></ion-icon> </div>
+        <div class="contact-info">
+          <p class="contact-title">Location</p>
+          <address>{{ profile.address }}</address>
+        </div>
+      </li>
+    </ul>
+
+    <div class="separator"></div>
+
+    <!-- Hiển thị Social Links -->
+    <!-- Dùng *ngFor để lặp qua mảng socialLinks$ | async -->
+    <ul class="social-list" *ngIf="(socialLinks$ | async)?.length">
+      <li class="social-item" *ngFor="let link of socialLinks$ | async">
+        <a [href]="link.url" target="_blank" class="social-link" [title]="link.platform">
+          <!-- Lấy tên icon từ link.icon_name -->
+          <ion-icon [name]="link.icon_name || 'link-outline'"></ion-icon>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<!-- Template hiển thị khi đang load profile -->
+<ng-template #loadingProfile>
+  <aside class="sidebar" data-sidebar>
+    <div class="sidebar-info">
+       Loading profile...
+    </div>
+   </aside>
+</ng-template>

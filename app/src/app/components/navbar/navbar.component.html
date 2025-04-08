@@ -1,0 +1,39 @@
+<!-- src/app/components/navbar/navbar.component.html -->
+<nav class="navbar">
+  <ul class="navbar-list">
+
+    <li class="navbar-item">
+      <!-- routerLink: Chỉ định đích đến khi click -->
+      <!-- routerLinkActive: Thêm class 'active' khi route này hoặc con của nó đang active -->
+      <!-- [routerLinkActiveOptions]="{ exact: true }": Chỉ active khi khớp chính xác -->
+      <button class="navbar-link"
+              routerLink="/about"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">About</button>
+    </li>
+
+    <li class="navbar-item">
+      <button class="navbar-link"
+              routerLink="/resume"
+              routerLinkActive="active">Resume</button>
+    </li>
+
+    <li class="navbar-item">
+      <button class="navbar-link"
+              routerLink="/portfolio"
+              routerLinkActive="active">Portfolio</button>
+    </li>
+
+    <!-- Bỏ Blog nếu không có trang Blog -->
+    <!-- <li class="navbar-item">
+      <button class="navbar-link" routerLink="/blog" routerLinkActive="active">Blog</button>
+    </li> -->
+
+    <li class="navbar-item">
+      <button class="navbar-link"
+              routerLink="/contact"
+              routerLinkActive="active">Contact</button>
+    </li>
+
+  </ul>
+</nav>

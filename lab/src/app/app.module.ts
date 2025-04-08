@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { TableContentComponent } from './components/table-content/table-content.component';
 import { RouterModule } from '@angular/router';
 import { ProductContainerComponent } from './product-container/product-container.component';
+import { ProductFormComponent } from './product-form/product-form.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -22,12 +23,14 @@ import { ProductContainerComponent } from './product-container/product-container
         ProductDetailComponent,
         HeaderComponent,
         TableContentComponent,
-        ProductContainerComponent
+        ProductContainerComponent,
+        ProductFormComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule
     ],
     providers: [],

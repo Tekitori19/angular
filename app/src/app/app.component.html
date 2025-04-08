@@ -1,0 +1,16 @@
+<!-- src/app/app.component.html -->
+<main>
+  <!-- 1. Hiển thị Sidebar Component -->
+  <app-sidebar></app-sidebar>
+
+  <!-- 2. Khu vực nội dung chính -->
+  <div class="main-content">
+
+    <!-- 2a. Hiển thị Navbar Component -->
+    <app-navbar></app-navbar>
+
+    <!-- 2b. Router Outlet: Nơi Angular sẽ render component của trang hiện tại -->
+    <router-outlet></router-outlet>
+
+  </div>
+</main>
