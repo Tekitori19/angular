@@ -1,1 +1,125 @@
-<p>about works!</p>
+<!-- src/app/pages/about/about.component.html -->
+
+<!-- Hiển thị Loading -->
+<div *ngIf="isLoading" class="loading-indicator">Loading About section...</div>
+
+<!-- Hiển thị Lỗi -->
+<div *ngIf="errorMessage && !isLoading" class="error-indicator">
+  Error: {{ errorMessage }}
+</div>
+
+<!-- Hiển thị Nội dung Trang khi không loading và không lỗi -->
+<article class="about active" data-page="about" *ngIf="!isLoading && !errorMessage">
+
+  <header>
+    <h2 class="h2 article-title">About me</h2>
+  </header>
+
+  <!-- About Text Section -->
+<section class="about-text" *ngIf="!(isLoading || errorMessage)">
+    <!-- Dùng async pipe với aboutParagraphs$ và gán vào biến paragraphs -->
+    <!-- Sử dụng ng-container để không tạo thêm thẻ DOM thừa -->
+    <ng-container *ngIf="(aboutParagraphs$ | async) as paragraphs; else noAboutText">
+        <!-- Kiểm tra xem mảng paragraphs có rỗng không -->
+        <ng-container *ngIf="paragraphs.length > 0; else noAboutText">
+            <!-- Lặp qua mảng paragraphs đã được xử lý -->
+            <p *ngFor="let paragraph of paragraphs">
+                {{ paragraph }}
+            </p>
+        </ng-container>
+    </ng-container>
+    <!-- Template hiển thị nếu không có about_text hoặc có lỗi xử lý -->
+    <ng-template #noAboutText>
+        <p>About description is not available.</p>
+    </ng-template>
+</section>
+
+  <!-- Services Section -->
+  <!-- Kiểm tra mảng services có dữ liệu không -->
+  <!-- <section class="service" *ngIf="(services$ | async)?.length; else noServices"> -->
+  <!--   <h3 class="h3 service-title">What I'm doing</h3> -->
+  <!--   <ul class="service-list"> -->
+  <!--     <!-- Lặp qua services --> -->
+  <!--     <li class="service-item" *ngFor="let service of services$ | async"> -->
+  <!--       <div class="service-icon-box"> -->
+  <!--         <img [src]="service.icon_image_url || './assets/images/icon-default.svg'" [alt]="service.title + ' icon'" width="40"> -->
+  <!--       </div> -->
+  <!--       <div class="service-content-box"> -->
+  <!--         <h4 class="h4 service-item-title">{{ service.title }}</h4> -->
+  <!--         <p class="service-item-text">{{ service.description }}</p> -->
+  <!--       </div> -->
+  <!--     </li> -->
+  <!--   </ul> -->
+  <!-- </section> -->
+  <!-- <ng-template #noServices> -->
+  <!--     <section class="service"><p>No services listed yet.</p></section> -->
+  <!-- </ng-template> -->
+  <!---->
+  <!---->
+  <!-- <!-- Testimonials Section --> -->
+  <!-- <section class="testimonials" *ngIf="(testimonials$ | async)?.length; else noTestimonials"> -->
+  <!--   <h3 class="h3 testimonials-title">Testimonials</h3> -->
+  <!--   <ul class="testimonials-list has-scrollbar"> -->
+  <!--     <!-- Lặp qua testimonials và gắn sự kiện click --> -->
+  <!--     <li class="testimonials-item" *ngFor="let testimonial of testimonials$ | async" (click)="openTestimonialModal(testimonial)"> -->
+  <!--       <div class="content-card" data-testimonials-item> -->
+  <!--         <figure class="testimonials-avatar-box"> -->
+  <!--           <img [src]="testimonial.client_avatar_url || './assets/images/avatar-default.png'" [alt]="testimonial.client_name" width="60" data-testimonials-avatar> -->
+  <!--         </figure> -->
+  <!--         <h4 class="h4 testimonials-item-title" data-testimonials-title>{{ testimonial.client_name }}</h4> -->
+  <!--         <div class="testimonials-text" data-testimonials-text> -->
+  <!--           <!-- Có thể cần giới hạn độ dài quote ở đây nếu muốn --> -->
+  <!--           <p>{{ testimonial.quote }}</p> -->
+  <!--         </div> -->
+  <!--       </div> -->
+  <!--     </li> -->
+  <!--   </ul> -->
+  <!-- </section> -->
+  <!--  <ng-template #noTestimonials> -->
+  <!--     <section class="testimonials"><p>No testimonials available yet.</p></section> -->
+  <!-- </ng-template> -->
+  <!---->
+  <!-- <!-- Testimonials Modal --> -->
+  <!-- <!-- Điều khiển hiển thị bằng isModalActive và class active --> -->
+  <!-- <div class="modal-container" data-modal-container [class.active]="isModalActive"> -->
+  <!--   <!-- Overlay để đóng modal --> -->
+  <!--   <div class="overlay" data-overlay (click)="closeTestimonialModal()"></div> -->
+  <!--   <!-- Nội dung modal, chỉ render khi có selectedTestimonial --> -->
+  <!--   <section class="testimonials-modal" *ngIf="selectedTestimonial"> -->
+  <!--     <button class="modal-close-btn" data-modal-close-btn (click)="closeTestimonialModal()"> -->
+  <!--       <ion-icon name="close-outline"></ion-icon> -->
+  <!--     </button> -->
+  <!--     <div class="modal-img-wrapper"> -->
+  <!--       <figure class="modal-avatar-box"> -->
+  <!--         <img [src]="selectedTestimonial.client_avatar_url || './assets/images/avatar-default.png'" [alt]="selectedTestimonial.client_name" width="80" data-modal-img> -->
+  <!--       </figure> -->
+  <!--       <img src="./assets/images/icon-quote.svg" alt="quote icon"> <!-- Đảm bảo path này đúng --> -->
+  <!--     </div> -->
+  <!--     <div class="modal-content"> -->
+  <!--       <h4 class="h3 modal-title" data-modal-title>{{ selectedTestimonial.client_name }}</h4> -->
+  <!--       <time *ngIf="selectedTestimonial.date" [attr.datetime]="selectedTestimonial.date">{{ selectedTestimonial.date | date:'dd MMMM, yyyy' }}</time> -->
+  <!--       <div data-modal-text> -->
+  <!--         <p>{{ selectedTestimonial.quote }}</p> -->
+  <!--       </div> -->
+  <!--     </div> -->
+  <!--   </section> -->
+  <!-- </div> -->
+  <!---->
+  <!---->
+  <!-- <!-- Clients Section --> -->
+  <!-- <section class="clients" *ngIf="(clients$ | async)?.length; else noClients"> -->
+  <!--   <h3 class="h3 clients-title">Clients</h3> -->
+  <!--   <ul class="clients-list has-scrollbar"> -->
+  <!--     <!-- Lặp qua clients --> -->
+  <!--     <li class="clients-item" *ngFor="let client of clients$ | async"> -->
+  <!--       <a [href]="client.website_url || '#'" target="_blank"> -->
+  <!--         <img [src]="client.logo_image_url" [alt]="client.name + ' logo'"> -->
+  <!--       </a> -->
+  <!--     </li> -->
+  <!--   </ul> -->
+  <!-- </section> -->
+  <!-- <ng-template #noClients> -->
+  <!--     <section class="clients"><p>No clients to display yet.</p></section> -->
+  <!-- </ng-template> -->
+
+</article>

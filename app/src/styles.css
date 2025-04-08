@@ -2156,3 +2156,25 @@ textarea.form-input::-webkit-resizer {
   }
 
 }
+
+body.modal-active {
+  overflow: hidden; /* Ngăn cuộn trang nền */
+}
+
+.modal-container {
+  display: none; /* Mặc định ẩn modal */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100; /* Đảm bảo modal nổi lên trên */
+  /* Các style khác cho backdrop và căn chỉnh */
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Backdrop mờ */
+}
+
+.modal-container.active {
+  display: flex; /* Hiển thị modal khi có class active */
+}

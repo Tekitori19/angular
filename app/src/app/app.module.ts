@@ -12,6 +12,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { ResumeComponent } from './pages/resume/resume.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
@@ -26,6 +27,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     ],
     imports: [
         BrowserModule,
+        CommonModule,
         AppRoutingModule,
         ReactiveFormsModule,
     ],

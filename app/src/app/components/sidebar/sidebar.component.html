@@ -1,41 +1,48 @@
 <!-- src/app/components/sidebar/sidebar.component.html -->
 
-<!-- Dùng *ngIf và async pipe để hiển thị khi có dữ liệu profile -->
-<aside class="sidebar" data-sidebar *ngIf="profile$ | async as profile; else loadingProfile">
+<!-- Hiển thị Loading -->
+<div *ngIf="isLoading" class="sidebar-loading">Loading Sidebar...</div>
+
+<!-- Hiển thị Lỗi -->
+<div *ngIf="errorMessage && !isLoading" class="sidebar-error">
+  Error: {{ errorMessage }}
+</div>
+
+<!-- Hiển thị Sidebar chính khi không loading và không có lỗi -->
+<!-- Sử dụng profile$ | async as profile -->
+<aside class="sidebar" data-sidebar *ngIf="!isLoading && !errorMessage && (profile$ | async) as profile">
 
   <div class="sidebar-info">
     <figure class="avatar-box">
-      <!-- Lấy avatar_image_url từ profile -->
+      <!-- Binding src và alt -->
       <img [src]="profile.avatar_image_url || './assets/images/default-avatar.png'" [alt]="profile.full_name" width="80">
     </figure>
 
     <div class="info-content">
-      <!-- Lấy full_name và job_title từ profile -->
+      <!-- Binding tên và chức danh -->
       <h1 class="name" [title]="profile.full_name">{{ profile.full_name }}</h1>
-      <p class="title">{{ profile.job_title }}</p>
+      <p class="title">{{ profile.job_title || 'N/A' }}</p> <!-- Hiển thị N/A nếu null -->
     </div>
 
     <!-- Nút Show/Hide Contacts -->
-    <!-- Gọi hàm toggleContacts() khi click -->
     <button class="info_more-btn" data-sidebar-btn (click)="toggleContacts()">
       <span>{{ showContacts ? 'Hide Contacts' : 'Show Contacts' }}</span>
-      <!-- Thay đổi icon dựa vào showContacts -->
       <ion-icon [name]="showContacts ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-       <!-- Lưu ý: Cần import ionicons vào index.html hoặc cài đặt thư viện ionicons cho Angular -->
     </button>
   </div>
 
-  <!-- Phần contact details, chỉ hiện khi showContacts là true -->
-  <!-- Dùng [class.active] để thêm class khi showContacts=true (CSS của bạn cần định nghĩa class .active) -->
+  <!-- Phần contact details, dùng [class.active] -->
   <div class="sidebar-info_more" [class.active]="showContacts">
     <div class="separator"></div>
 
-    <!-- Hiển thị thông tin liên hệ từ profile -->
+    <!-- Contacts List -->
     <ul class="contacts-list">
+      <!-- *ngIf để chỉ hiện item nếu có dữ liệu -->
       <li class="contact-item" *ngIf="profile.email">
         <div class="icon-box"> <ion-icon name="mail-outline"></ion-icon> </div>
         <div class="contact-info">
           <p class="contact-title">Email</p>
+          <!-- Binding href -->
           <a [href]="'mailto:' + profile.email" class="contact-link">{{ profile.email }}</a>
         </div>
       </li>
@@ -43,6 +50,7 @@
         <div class="icon-box"> <ion-icon name="phone-portrait-outline"></ion-icon> </div>
         <div class="contact-info">
           <p class="contact-title">Phone</p>
+          <!-- Binding href -->
           <a [href]="'tel:' + profile.phone" class="contact-link">{{ profile.phone }}</a>
         </div>
       </li>
@@ -50,9 +58,8 @@
         <div class="icon-box"> <ion-icon name="calendar-outline"></ion-icon> </div>
         <div class="contact-info">
           <p class="contact-title">Birthday</p>
-          <!-- Định dạng lại ngày tháng nếu cần dùng DatePipe -->
+          <!-- Sử dụng DatePipe để định dạng -->
           <time [attr.datetime]="profile.birthday">{{ profile.birthday | date:'dd/MM/yyyy' }}</time>
-          <!-- Hoặc giữ nguyên nếu backend trả về dạng dd/MM/yyyy: <time [attr.datetime]="profile.birthday">{{ profile.birthday }}</time> -->
         </div>
       </li>
       <li class="contact-item" *ngIf="profile.address">
@@ -66,12 +73,14 @@
 
     <div class="separator"></div>
 
-    <!-- Hiển thị Social Links -->
-    <!-- Dùng *ngFor để lặp qua mảng socialLinks$ | async -->
+    <!-- Social Links List -->
+    <!-- Dùng *ngIf để kiểm tra mảng có phần tử không trước khi lặp -->
     <ul class="social-list" *ngIf="(socialLinks$ | async)?.length">
+      <!-- Lặp qua socialLinks -->
       <li class="social-item" *ngFor="let link of socialLinks$ | async">
+        <!-- Binding href và title -->
         <a [href]="link.url" target="_blank" class="social-link" [title]="link.platform">
-          <!-- Lấy tên icon từ link.icon_name -->
+          <!-- Binding tên icon -->
           <ion-icon [name]="link.icon_name || 'link-outline'"></ion-icon>
         </a>
       </li>
@@ -79,11 +88,7 @@
   </div>
 </aside>
 
-<!-- Template hiển thị khi đang load profile -->
-<ng-template #loadingProfile>
-  <aside class="sidebar" data-sidebar>
-    <div class="sidebar-info">
-       Loading profile...
-    </div>
-   </aside>
-</ng-template>
+<!-- Có thể thêm template #noProfileFound nếu muốn xử lý trường hợp profile là null mà không có lỗi -->
+<div *ngIf="!isLoading && !errorMessage && !(profile$ | async)">
+    Profile data not available.
+</div>

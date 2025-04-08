@@ -1,44 +1,73 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, map } from 'rxjs'; // Import Observable và map operator
-import { DataService, Profile } from '../../services/data.service'; // Import service và interface Profile
-// Import thêm interface SocialLink nếu bạn đã định nghĩa
+import { Component, OnInit } from '@angular/core'; // Import OnInit
+import { Observable, map, catchError, of, tap } from 'rxjs'; // Import Observable, map, catchError, of
+import { DataService, Profile, SocialLink } from '../../services/data.service'; // Import service và interfaces
 
 @Component({
-    selector: 'app-sidebar', // Thẻ <app-sidebar>
+    selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     standalone: false,
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit { // Implement OnInit
+// Implement OnInit để sử dụng hook ngOnInit
+export class SidebarComponent implements OnInit {
+    profile$: Observable<Profile | null> = of(null);
+    socialLinks$: Observable<SocialLink[]> = of([]);
+    isLoading = true; // <<< Khởi tạo là true
+    errorMessage: string | null = null;
+    showContacts = false;
 
-    // Khai báo các Observable để chứa dữ liệu từ service
-    profile$: Observable<Profile | null> = new Observable(); // Khởi tạo để tránh lỗi
-    socialLinks$: Observable<any[]> = new Observable(); // Thay 'any' bằng SocialLink[]
-
-    showContacts = false; // Biến trạng thái để ẩn/hiện contact details
-
-    // Inject DataService vào constructor
     constructor(private dataService: DataService) { }
 
-    // Hàm ngOnInit sẽ chạy một lần sau khi component được khởi tạo
     ngOnInit(): void {
-        // Gọi service để lấy dữ liệu portfolio chung
+        this.isLoading = true; // Đặt lại isLoading mỗi khi init
+        this.errorMessage = null;
+
+        console.log("Sidebar ngOnInit: Fetching data..."); // Thêm log
+
         const portfolioData$ = this.dataService.getPortfolioData();
 
-        // Trích xuất profile từ dữ liệu chung
+        // Profile
         this.profile$ = portfolioData$.pipe(
-            map(data => data?.profile || null) // Dùng map để lấy ra profile, trả về null nếu data không có
+            map(data => data?.profile || null),
+            // Di chuyển tap vào cuối hoặc xử lý loading/error chung
+            catchError(err => {
+                this.errorMessage = `Profile Error: ${err.message || 'Failed to load profile.'}`;
+                // QUAN TRỌNG: Vẫn phải set isLoading = false khi lỗi ở đây nếu không xử lý chung
+                // this.isLoading = false; // Nếu chỉ xử lý lỗi riêng cho profile
+                console.error("Sidebar Error loading profile:", err);
+                return of(null); // Trả về null khi lỗi
+            })
         );
 
-        // Trích xuất social links
+        // Social Links
         this.socialLinks$ = portfolioData$.pipe(
-            map(data => data?.socialLinks || []) // Lấy socialLinks, trả về mảng rỗng nếu không có
+            map(data => data?.socialLinks || []),
+            catchError(err => {
+                console.error("Sidebar Error loading social links:", err);
+                return of([]); // Trả về mảng rỗng khi lỗi
+            })
         );
-    }
 
-    // Hàm để bật/tắt hiển thị contact details
+        // == CÁCH TỐT HƠN: Xử lý loading/error chung cho cả portfolioData$ ==
+        portfolioData$.subscribe({
+            next: (data) => {
+                console.log("Sidebar ngOnInit: Data received successfully.");
+                // Dữ liệu đã được map vào profile$ và socialLinks$ bởi các pipe ở trên
+                this.isLoading = false; // <<< Chỉ đặt isLoading = false KHI THÀNH CÔNG
+                this.errorMessage = null; // Xóa lỗi nếu thành công
+            },
+            error: (err) => {
+                console.error("Sidebar ngOnInit: Error fetching portfolioData$:", err);
+                this.errorMessage = `Sidebar Data Error: ${err.message || 'Failed to load sidebar data.'}`;
+                this.isLoading = false; // <<< Đặt isLoading = false KHI LỖI
+            }
+            // complete: () => { // Ít khi cần dùng với HTTP GET đơn lẻ
+            //    console.log("Sidebar ngOnInit: portfolioData$ completed.");
+            // }
+        });
+    } // kết thúc ngOnInit
+
     toggleContacts(): void {
         this.showContacts = !this.showContacts;
-        console.log('Show contacts:', this.showContacts); // Kiểm tra
     }
 }
