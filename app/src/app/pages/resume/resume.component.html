@@ -1,1 +1,96 @@
-<p>resume works!</p>
+<!-- src/app/pages/resume/resume.component.html -->
+
+<!-- Hiển thị Loading -->
+<div *ngIf="isLoading" class="loading-indicator">Loading Resume...</div>
+
+<!-- Hiển thị Lỗi -->
+<div *ngIf="errorMessage && !isLoading" class="error-indicator">
+  Error: {{ errorMessage }}
+</div>
+
+<!-- Nội dung chính -->
+<article class="resume active" data-page="resume" *ngIf="!isLoading && !errorMessage">
+
+  <header>
+    <h2 class="h2 article-title">Resume</h2>
+  </header>
+
+  <!-- Education Section -->
+  <section class="timeline">
+    <div class="title-wrapper">
+      <div class="icon-box">
+        <ion-icon name="book-outline"></ion-icon>
+      </div>
+      <h3 class="h3">Education</h3>
+    </div>
+
+    <ng-container *ngIf="(education$ | async) as educationItems; else loadingEducation">
+      <ng-container *ngIf="educationItems.length > 0; else noEducation">
+        <ol class="timeline-list">
+          <li class="timeline-item" *ngFor="let item of educationItems">
+            <h4 class="h4 timeline-item-title">{{ item.degree_or_focus || item.institution_name }}</h4>
+            <span>{{ item.period || 'N/A' }}</span>
+            <!-- Hiển thị tên trường nếu khác với degree/focus -->
+             <p class="timeline-institution" *ngIf="item.degree_or_focus && item.degree_or_focus !== item.institution_name">{{item.institution_name}}</p>
+            <p class="timeline-text" *ngIf="item.description">{{ item.description }}</p>
+          </li>
+        </ol>
+      </ng-container>
+    </ng-container>
+    <ng-template #loadingEducation><p>Loading education...</p></ng-template>
+    <ng-template #noEducation><p>No education history available.</p></ng-template>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="timeline">
+    <div class="title-wrapper">
+      <div class="icon-box">
+         <!-- Có thể đổi icon khác nếu muốn, ví dụ: briefcase-outline -->
+        <ion-icon name="book-outline"></ion-icon>
+      </div>
+      <h3 class="h3">Experience</h3>
+    </div>
+
+    <ng-container *ngIf="(experience$ | async) as experienceItems; else loadingExperience">
+       <ng-container *ngIf="experienceItems.length > 0; else noExperience">
+         <ol class="timeline-list">
+           <li class="timeline-item" *ngFor="let item of experienceItems">
+             <h4 class="h4 timeline-item-title">{{ item.job_title }}</h4>
+              <p class="timeline-company" *ngIf="item.company_name">{{ item.company_name }}</p>
+             <span>{{ item.period || 'N/A' }}</span>
+             <p class="timeline-text" *ngIf="item.description">{{ item.description }}</p>
+           </li>
+         </ol>
+       </ng-container>
+    </ng-container>
+     <ng-template #loadingExperience><p>Loading experience...</p></ng-template>
+     <ng-template #noExperience><p>No work experience available.</p></ng-template>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skill">
+    <h3 class="h3 skills-title">My skills</h3>
+
+     <ng-container *ngIf="(skills$ | async) as skillItems; else loadingSkills">
+        <ng-container *ngIf="skillItems.length > 0; else noSkills">
+         <!-- Giả sử muốn hiển thị dạng danh sách card như template gốc -->
+          <ul class="skills-list content-card">
+            <li class="skills-item" *ngFor="let skill of skillItems">
+              <div class="title-wrapper">
+                <h5 class="h5">{{ skill.name }}</h5>
+                <data [value]="skill.percentage">{{ skill.percentage }}%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <!-- Binding style width cho thanh progress -->
+                <div class="skill-progress-fill" [style.width.%]="skill.percentage"></div>
+              </div>
+            </li>
+          </ul>
+           <!-- Hoặc hiển thị dạng khác nếu muốn -->
+        </ng-container>
+     </ng-container>
+     <ng-template #loadingSkills><p>Loading skills...</p></ng-template>
+     <ng-template #noSkills><p>No skills listed yet.</p></ng-template>
+  </section>
+
+</article>

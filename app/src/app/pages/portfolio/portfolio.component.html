@@ -1,1 +1,74 @@
-<p>portfolio works!</p>
+<!-- src/app/pages/portfolio/portfolio.component.html -->
+
+<!-- Loading/Error Handling -->
+<div *ngIf="isLoading" class="loading-indicator">Loading Portfolio...</div>
+<div *ngIf="errorMessage && !isLoading" class="error-indicator">Error: {{ errorMessage }}</div>
+
+<article class="portfolio active" data-page="portfolio" *ngIf="!isLoading && !errorMessage">
+
+  <header>
+    <h2 class="h2 article-title">Portfolio</h2>
+  </header>
+
+  <!-- Projects Section -->
+  <section class="projects">
+
+    <!-- Filter List (Desktop) -->
+    <!-- Chỉ hiển thị nếu có categories -->
+    <ul class="filter-list" *ngIf="(categories$ | async)?.length">
+      <li class="filter-item">
+        <!-- Nút 'All' -->
+        <!-- Gắn class 'active' nếu selectedCategorySlug là 'all' -->
+        <button [class.active]="(selectedCategorySlug$ | async) === 'all'"
+                (click)="selectCategory('all')" data-filter-btn>All</button>
+      </li>
+      <!-- Lặp qua các categories để tạo nút filter -->
+      <li class="filter-item" *ngFor="let category of categories$ | async">
+        <!-- Gắn class 'active' nếu slug của category này khớp với selectedCategorySlug -->
+        <button [class.active]="(selectedCategorySlug$ | async) === category.slug"
+                (click)="selectCategory(category.slug)" data-filter-btn>{{ category.name }}</button>
+      </li>
+    </ul>
+
+    <!-- Filter Select Box (Mobile - Adapt based on original template's JS/CSS) -->
+    <!-- Logic cho select box có thể phức tạp hơn, cần JS/CSS từ template gốc hoặc logic component riêng -->
+    <div class="filter-select-box" *ngIf="(categories$ | async)?.length">
+       <!-- Phần này có thể cần custom directive hoặc logic trong component .ts để xử lý dropdown -->
+       <select class="filter-select" (change)="selectCategory($any($event.target).value)">
+          <option value="all">All</option>
+          <option *ngFor="let category of categories$ | async" [value]="category.slug">{{category.name}}</option>
+       </select>
+      <!-- Icon dropdown -->
+       <div class="select-icon">
+         <ion-icon name="chevron-down"></ion-icon>
+       </div>
+    </div>
+
+
+    <!-- Project List -->
+    <!-- Sử dụng filteredProjects$ để hiển thị -->
+    <ng-container *ngIf="(filteredProjects$ | async) as projects; else loadingProjects">
+       <ng-container *ngIf="projects.length > 0; else noProjectsFound">
+         <ul class="project-list">
+           <li class="project-item" *ngFor="let project of projects">
+             <!-- Sử dụng routerLink để điều hướng đến trang chi tiết -->
+             <a [routerLink]="['/projects', project.slug]">
+               <figure class="project-img">
+                 <div class="project-item-icon-box">
+                   <ion-icon name="eye-outline"></ion-icon>
+                 </div>
+                 <img [src]="project.thumbnail_image_url" [alt]="project.title" loading="lazy">
+               </figure>
+               <h3 class="project-title">{{ project.title }}</h3>
+               <p class="project-category">{{ project.category_name || 'N/A' }}</p>
+             </a>
+           </li>
+         </ul>
+       </ng-container>
+    </ng-container>
+     <ng-template #loadingProjects><p>Loading projects...</p></ng-template>
+     <ng-template #noProjectsFound><p>No projects found matching the filter.</p></ng-template>
+
+  </section>
+
+</article>

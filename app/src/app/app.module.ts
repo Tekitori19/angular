@@ -13,6 +13,8 @@ import { ResumeComponent } from './pages/resume/resume.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CommonModule } from '@angular/common';
+import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
+import { CertificateDetailComponent } from './pages/certificate-detail/certificate-detail.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
@@ -24,6 +26,8 @@ import { CommonModule } from '@angular/common';
         ResumeComponent,
         PortfolioComponent,
         ContactComponent,
+        ProjectDetailComponent,
+        CertificateDetailComponent,
     ],
     imports: [
         BrowserModule,

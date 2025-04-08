@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 // <<< Import các Page components >>>
 import { AboutComponent } from './pages/about/about.component';
-import { ResumeComponent } from './pages/resume/resume.component';
-import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
+import { ResumeComponent } from './pages/resume/resume.component';
+import { CertificateDetailComponent } from './pages/certificate-detail/certificate-detail.component';
 // Chúng ta sẽ import ProjectDetailComponent và CertificateDetailComponent sau
 
 const routes: Routes = [
@@ -41,9 +43,16 @@ const routes: Routes = [
         redirectTo: '/about', // Chuyển hướng đến path '/about'
         pathMatch: 'full' // Chỉ thực hiện redirect khi path là rỗng hoàn toàn
     },
-
-    // --- Các route cho trang chi tiết sẽ được thêm sau ---
-
+    {
+        path: 'projects/:slug', // <<< Đã có
+        component: ProjectDetailComponent,
+        title: 'Project Details'
+    },
+    {
+        path: 'certificates/:id', // <<< Đã có
+        component: CertificateDetailComponent,
+        title: 'Certificate Details'
+    },
     // Route Wildcard (cho các URL không hợp lệ)
     // Chuyển hướng tất cả các URL không khớp về trang '/about'.
     {

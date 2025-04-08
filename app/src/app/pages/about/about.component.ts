@@ -1,6 +1,6 @@
 // src/app/pages/about/about.component.ts
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Observable, map, catchError, of, tap } from 'rxjs';
+import { Observable, map, catchError, of } from 'rxjs';
 import { DataService, Profile, ServiceItem, Testimonial, Client } from '../../services/data.service'; // Đảm bảo import đủ Interfaces
 
 @Component({
