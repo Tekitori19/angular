@@ -1,0 +1,143 @@
+<nav class="bg-indigo-600 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <span class="text-white text-xl font-bold">Lab 6 - GoRest API</span>
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a [class.bg-indigo-700]="activeTab === 'posts'"
+                 class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-500"
+                 (click)="setActiveTab('posts')" href="javascript:void(0)">
+                Bài viết
+              </a>
+              <a [class.bg-indigo-700]="activeTab === 'todos'"
+                 class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-500"
+                 (click)="setActiveTab('todos')" href="javascript:void(0)">
+                Todos
+              </a>
+              <a [class.bg-indigo-700]="activeTab === 'create-todo'"
+                 class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-500"
+                 (click)="setActiveTab('create-todo')" href="javascript:void(0)">
+                Tạo Todo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu (hidden on larger screens) -->
+    <div class="md:hidden bg-indigo-600 pb-2">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a [class.bg-indigo-700]="activeTab === 'posts'"
+           class="text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-500"
+           (click)="setActiveTab('posts')" href="javascript:void(0)">
+          Bài viết
+        </a>
+        <a [class.bg-indigo-700]="activeTab === 'todos'"
+           class="text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-500"
+           (click)="setActiveTab('todos')" href="javascript:void(0)">
+          Todos
+        </a>
+        <a [class.bg-indigo-700]="activeTab === 'create-todo'"
+           class="text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-500"
+           (click)="setActiveTab('create-todo')" href="javascript:void(0)">
+          Tạo Todo
+        </a>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-col md:flex-row gap-6">
+        <!-- Sidebar (hidden on mobile) -->
+        <div class="hidden md:block md:w-1/4 lg:w-1/5">
+          <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+            <div class="px-4 py-2 bg-gray-50 border-b border-gray-200">
+              <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Navigation</h3>
+            </div>
+            <div class="divide-y divide-gray-200">
+              <a href="javascript:void(0)"
+                 class="block px-4 py-3 hover:bg-gray-50"
+                 [class.bg-indigo-50]="activeTab === 'posts'"
+                 [class.text-indigo-600]="activeTab === 'posts'"
+                 (click)="setActiveTab('posts')">
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                  Bài viết
+                </div>
+              </a>
+              <a href="javascript:void(0)"
+                 class="block px-4 py-3 hover:bg-gray-50"
+                 [class.bg-indigo-50]="activeTab === 'todos'"
+                 [class.text-indigo-600]="activeTab === 'todos'"
+                 (click)="setActiveTab('todos')">
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                  </svg>
+                  Todos
+                </div>
+              </a>
+              <a href="javascript:void(0)"
+                 class="block px-4 py-3 hover:bg-gray-50"
+                 [class.bg-indigo-50]="activeTab === 'create-todo'"
+                 [class.text-indigo-600]="activeTab === 'create-todo'"
+                 (click)="setActiveTab('create-todo')">
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Tạo Todo
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Info card -->
+          <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="px-4 py-2 bg-blue-500 text-white">
+              <h3 class="text-sm font-medium tracking-wider">Thông tin</h3>
+            </div>
+            <div class="p-4 text-sm">
+              <p class="mb-2">UserID: 7374914</p>
+              <p class="mb-2">API: GoRest</p>
+              <p class="text-xs text-gray-500">Lab 6</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content area -->
+        <div class="md:w-3/4 lg:w-4/5">
+          <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="px-6 py-4 bg-indigo-600 text-white">
+              <h2 class="text-xl font-semibold">
+                {{ getActiveTabTitle() }}
+              </h2>
+            </div>
+            <div class="p-6">
+              <!-- Dynamic component rendering based on active tab -->
+              <div [ngSwitch]="activeTab">
+                <app-user-posts *ngSwitchCase="'posts'"></app-user-posts>
+                <app-user-todos *ngSwitchCase="'todos'"></app-user-todos>
+                <app-create-todo *ngSwitchCase="'create-todo'"></app-create-todo>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t border-gray-200 mt-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="text-center text-gray-500 text-sm">
+          <p>Lab 6 - GoRest API Demo © {{ currentYear }}</p>
+        </div>
+      </div>
+    </footer>

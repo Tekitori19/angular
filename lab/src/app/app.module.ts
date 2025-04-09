@@ -13,6 +13,11 @@ import { TableContentComponent } from './components/table-content/table-content.
 import { RouterModule } from '@angular/router';
 import { ProductContainerComponent } from './product-container/product-container.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { provideHttpClient } from '@angular/common/http';
+import { Lab6Component } from './pages/lab6/lab6.component';
+import { UserPostsComponent } from './pages/lab6/user-posts/user-posts.component';
+import { UserTodosComponent } from './pages/lab6/user-todos/user-todos.component';
+import { CreateTodoComponent } from './pages/lab6/create-todo/create-todo.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -24,7 +29,11 @@ import { ProductFormComponent } from './product-form/product-form.component';
         HeaderComponent,
         TableContentComponent,
         ProductContainerComponent,
-        ProductFormComponent
+        ProductFormComponent,
+        Lab6Component,
+        UserPostsComponent,
+        UserTodosComponent,
+        CreateTodoComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +42,9 @@ import { ProductFormComponent } from './product-form/product-form.component';
         ReactiveFormsModule,
         RouterModule
     ],
-    providers: [],
+    providers: [
+        provideHttpClient()
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

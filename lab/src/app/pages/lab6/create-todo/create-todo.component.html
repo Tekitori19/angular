@@ -1,0 +1,64 @@
+<div *ngIf="success" class="alert alert-success alert-dismissible fade show flex items-center p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i> Todo đã được tạo thành công!
+    <button type="button" class="btn-close ml-auto bg-transparent text-green-500 hover:text-green-700" (click)="success = false"></button>
+</div>
+
+<div *ngIf="error" class="alert alert-danger alert-dismissible fade show flex items-center p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
+    <button type="button" class="btn-close ml-auto bg-transparent text-red-500 hover:text-red-700" (click)="error = ''"></button>
+</div>
+
+<form (ngSubmit)="onSubmit()" #todoForm="ngForm" class="space-y-4">
+    <div class="mb-3">
+        <label for="title" class="form-label block text-sm font-medium text-gray-700">Tiêu đề</label>
+        <input
+            type="text"
+            class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            id="title"
+            name="title"
+            placeholder="Nhập tiêu đề todo"
+            [(ngModel)]="todoData.title"
+            required
+        >
+        <div class="form-text text-sm text-gray-500">Vui lòng nhập tiêu đề cho todo mới.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="status" class="form-label block text-sm font-medium text-gray-700">Trạng thái</label>
+        <select
+            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            id="status"
+            name="status"
+            [(ngModel)]="todoData.status"
+            required
+        >
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="dueDate" class="form-label block text-sm font-medium text-gray-700">Ngày đến hạn</label>
+        <input
+            type="datetime-local"
+            class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            id="dueDate"
+            name="dueDate"
+            [(ngModel)]="dueDate"
+        >
+        <div class="form-text text-sm text-gray-500">Thời hạn hoàn thành todo (tùy chọn).</div>
+    </div>
+
+    <div class="d-grid gap-2">
+        <button
+            type="submit"
+            class="btn btn-primary inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            [disabled]="loading || !todoForm.form.valid"
+        >
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <i *ngIf="!loading" class="bi bi-plus-circle me-2"></i>
+            Tạo Todo
+        </button>
+    </div>
+</form>
+
