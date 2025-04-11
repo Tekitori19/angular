@@ -1,0 +1,49 @@
+.container {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+nav ul li {
+    flex: 1;
+}
+
+nav ul li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #ddd;
+}
+
+nav ul li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.content {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}

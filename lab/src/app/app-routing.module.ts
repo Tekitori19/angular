@@ -11,6 +11,10 @@ const routes: Routes = [
     { path: 'card/:id', component: ProductDetailComponent },
     { path: 'form', component: ProductFormComponent },
     { path: 'lab6', component: Lab6Component },
+    { path: 'lab7', loadChildren: () => import('./pages/lab7/lab7.module').then(m => m.Lab7Module) },
+    { path: 'lab7/home', loadChildren: () => import('./pages/lab7/home/home.module').then(m => m.HomeModule) },
+    { path: 'lab7/products', loadChildren: () => import('./pages/lab7/products/products.module').then(m => m.ProductsModule) },
+    { path: 'lab7/user', loadChildren: () => import('./pages/lab7/user/user.module').then(m => m.UserModule) },
 ];
 
 @NgModule({
