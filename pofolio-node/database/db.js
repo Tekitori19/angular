@@ -220,16 +220,13 @@ function handleSeedError(tableName) {
 }
 
 /**
- * Seed dữ liệu mẫu vào database nếu rỗng.
+ * Seed dữ liệu mẫu với URL ảnh placeholder công khai.
  * @param {sqlite3.Database} databaseInstance Đối tượng kết nối DB.
  * @returns {Promise<void>}
  */
 function seedDatabase(databaseInstance) {
     return new Promise((resolve, reject) => {
-        if (!databaseInstance) {
-            console.error("Database instance is required for seedDatabase.");
-            return reject(new Error("Database instance not provided to seedDatabase"));
-        }
+        if (!databaseInstance) return reject(new Error("Database instance not provided"));
 
         console.log("Checking if database needs seeding...");
         databaseInstance.get("SELECT COUNT(*) as count FROM profile", (err, row) => {
@@ -242,99 +239,144 @@ function seedDatabase(databaseInstance) {
                 console.log("Database is empty. Seeding initial data...");
                 databaseInstance.serialize(() => {
 
-                    // <<< COPY & PASTE TOÀN BỘ CÁC LỆNH INSERT TỪ HÀM seedDatabase CŨ VÀO ĐÂY >>>
-                    // <<< Thay 'db.run' thành 'databaseInstance.run' >>>
-
                     // --- Seed Profile ---
                     const profileSql = `INSERT INTO profile (full_name, job_title, avatar_image_url, email, phone, birthday, address, about_text) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-                    const profileParams = ["Phan Duong Dinh", "Web Developer", "./assets/images/my-avatar.png", "your.email@example.com", "0989999999", "2003-12-19", "Hanoi, Vietnam", `I'm a passionate...`];
+                    const profileParams = [
+                        "Phan Duong Dinh",                  // <<< THAY BẰNG TÊN BẠN
+                        "Full-Stack Developer",
+                        "https://placehold.co/150x150/7F39DE/white?text=Avatar", // <<< Placeholder Avatar
+                        "corclan19@gmail.com",   // <<< THAY BẰNG EMAIL BẠN
+                        "09xxxxxxxx",
+                        "2003-12-19",
+                        "Hanoi, Vietnam",
+                        `
+I am a passionate Web Developer with expertise in building dynamic and responsive web applications. My skill set includes modern frameworks and technologies such as Angular, React, Node.js, and PHP. I specialize in creating scalable front-end interfaces and robust back-end systems, delivering seamless user experiences. With a strong focus on clean code and performance optimization, I am committed to crafting solutions that meet both user and business needs.
+` // <<< VIẾT BIO CỦA BẠN
+                    ];
                     databaseInstance.run(profileSql, profileParams, handleSeedError("profile"));
 
                     // --- Seed Social Links ---
                     const socialSql = `INSERT INTO social_links (platform, url, icon_name, display_order) VALUES (?, ?, ?, ?)`;
-                    databaseInstance.run(socialSql, ["Facebook", "#", "logo-facebook", 1], handleSeedError("social_links"));
-                    databaseInstance.run(socialSql, ["GitHub", "https://github.com/yourusername", "logo-github", 2], handleSeedError("social_links"));
-                    databaseInstance.run(socialSql, ["LinkedIn", "#", "logo-linkedin", 3], handleSeedError("social_links"));
+                    databaseInstance.run(socialSql, ["GitHub", "https://github.com/Tekitori19", "logo-github", 1], handleSeedError("social_links")); // <<< Link GitHub THẬT
+                    databaseInstance.run(socialSql, ["Facebook", "https://www.facebook.com/dwcks999", "logo-facebook", 1], handleSeedError("social_links"));
+                    databaseInstance.run(socialSql, ["LinkedIn", "https://linkedin.com/in/your-linkedin-profile", "logo-linkedin", 2], handleSeedError("social_links")); // <<< Link LinkedIn THẬT
 
                     // --- Seed Services ---
-                    const serviceSql = `INSERT INTO services (title, description, icon_image_url, display_order) VALUES (?, ?, ?, ?)`;
-                    databaseInstance.run(serviceSql, ["Web design", "Modern...", "./assets/images/icon-design.svg", 1], handleSeedError("services"));
-                    databaseInstance.run(serviceSql, ["Web development", "High-quality...", "./assets/images/icon-dev.svg", 2], handleSeedError("services"));
-                    databaseInstance.run(serviceSql, ["Mobile apps", "Development...", "./assets/images/icon-app.svg", 3], handleSeedError("services"));
+                    const serviceSql = `INSERT INTO services(title, description, icon_image_url, display_order) VALUES(?, ?, ?, ?)`;
+                    databaseInstance.run(serviceSql, ["Responsive Web Design", "Creating websites that adapt seamlessly...", "https://placehold.co/60x60/FFC107/black?text=RWD", 1], handleSeedError("services")); // Placeholder Icon
+                    databaseInstance.run(serviceSql, ["Angular Development", "Building dynamic single-page applications...", "https://placehold.co/60x60/DD0031/white?text=Angular", 2], handleSeedError("services")); // Placeholder Icon
+                    databaseInstance.run(serviceSql, ["Node.js/Express API", "Developing robust backend services...", "https://placehold.co/60x60/4CAF50/white?text=API", 3], handleSeedError("services")); // Placeholder Icon
+                    databaseInstance.run(serviceSql, ["Database Management", "Designing and managing databases...", "https://placehold.co/60x60/2196F3/white?text=DB", 4], handleSeedError("services")); // Placeholder Icon
 
                     // --- Seed Testimonials ---
-                    const testimonialSql = `INSERT INTO testimonials (client_name, client_avatar_url, quote, date, display_order) VALUES (?, ?, ?, ?, ?)`;
-                    databaseInstance.run(testimonialSql, ["Daniel Lewis", "./assets/images/avatar-1.png", "Duong Dinh was great...", "2023-10-15", 1], handleSeedError("testimonials"));
-                    databaseInstance.run(testimonialSql, ["Jessica Miller", "./assets/images/avatar-2.png", "Highly recommend!...", "2023-11-01", 2], handleSeedError("testimonials"));
+                    const testimonialSql = `INSERT INTO testimonials(client_name, client_avatar_url, quote, date, display_order) VALUES(?, ?, ?, ?, ?)`;
+                    databaseInstance.run(testimonialSql, ["Anh Tuan Nguyen (Tech Lead)", "https://placehold.co/80x80/3F51B5/white?text=TA", "Duong Dinh is a highly skilled developer...", "2024-03-15", 1], handleSeedError("testimonials")); // Placeholder Avatar
+                    databaseInstance.run(testimonialSql, ["Ms. Emily Chen (PM)", "https://placehold.co/80x80/E91E63/white?text=EC", "Working with Duong Dinh was a pleasure...", "2023-11-20", 2], handleSeedError("testimonials")); // Placeholder Avatar
+                    databaseInstance.run(testimonialSql, ["Dr. Hoang Pham (Professor)", "https://placehold.co/80x80/009688/white?text=HP", "An enthusiastic and quick learner...", "2023-06-10", 3], handleSeedError("testimonials")); // Placeholder Avatar
 
                     // --- Seed Clients ---
-                    const clientSql = `INSERT INTO clients (name, logo_image_url, website_url, display_order) VALUES (?, ?, ?, ?)`;
-                    databaseInstance.run(clientSql, ["Client Logo 1", "./assets/images/logo-1-color.png", "#", 1], handleSeedError("clients"));
-                    databaseInstance.run(clientSql, ["Client Logo 2", "./assets/images/logo-2-color.png", "#", 2], handleSeedError("clients"));
-                    databaseInstance.run(clientSql, ["Client Logo 3", "./assets/images/logo-3-color.png", "#", 3], handleSeedError("clients"));
+                    const clientSql = `INSERT INTO clients(name, logo_image_url, website_url, display_order) VALUES(?, ?, ?, ?)`;
+                    databaseInstance.run(clientSql, ["FPT Software (Project)", "https://placehold.co/150x70/F44336/white?text=Logo+FPT", "https://fptsoftware.com", 1], handleSeedError("clients")); // Placeholder Logo
+                    databaseInstance.run(clientSql, ["Example E-commerce", "https://placehold.co/150x70/9C27B0/white?text=Logo+Ecom", "#", 2], handleSeedError("clients")); // Placeholder Logo
+                    databaseInstance.run(clientSql, ["Local NGO", "https://placehold.co/150x70/00BCD4/white?text=Logo+NGO", "#", 3], handleSeedError("clients")); // Placeholder Logo
+                    databaseInstance.run(clientSql, ["University Project Group", "https://placehold.co/150x70/8BC34A/black?text=Logo+Uni", "#", 4], handleSeedError("clients")); // Placeholder Logo
 
-                    // --- Seed Education ---
-                    const educationSql = `INSERT INTO education (institution_name, degree_or_focus, period, description, display_order) VALUES (?, ?, ?, ?, ?)`;
-                    databaseInstance.run(educationSql, ["FPT Polytechnic", "Web Development", "2022 — 2025", "Studied front-end...", 1], handleSeedError("education"));
-                    databaseInstance.run(educationSql, ["Online Course Platform", "Advanced JavaScript", "2023", "Completed an intensive course...", 2], handleSeedError("education"));
 
-                    // --- Seed Experience ---
-                    const experienceSql = `INSERT INTO experience (job_title, company_name, period, description, display_order) VALUES (?, ?, ?, ?, ?)`;
-                    databaseInstance.run(experienceSql, ["Freelance Web Developer", "Self-employed", "2023 — Present", "Developed custom websites...", 1], handleSeedError("experience"));
-                    databaseInstance.run(experienceSql, ["Intern Web Developer", "Tech Company ABC", "Summer 2023", "Assisted senior developers...", 2], handleSeedError("experience"));
+                    // --- Seed Education (Giữ nguyên, không có ảnh) ---
+                    const educationSql = `INSERT INTO education(institution_name, degree_or_focus, period, description, display_order) VALUES(?, ?, ?, ?, ?)`;
+                    databaseInstance.run(educationSql, ["FPT Polytechnic Hanoi", "Software Development (Web Specialization)", "2022 — 2025", "Gained strong foundation...", 1], handleSeedError("education"));
+                    databaseInstance.run(educationSql, ["Coursera", "Google UX Design Professional Certificate (Completed 3/7 courses)", "2023", "Learning foundational UX...", 2], handleSeedError("education"));
 
-                    // --- Seed Skills ---
-                    const skillSql = `INSERT INTO skills (name, percentage, category, display_order) VALUES (?, ?, ?, ?)`;
-                    databaseInstance.run(skillSql, ["HTML & CSS", 90, "Frontend", 1], handleSeedError("skills"));
-                    databaseInstance.run(skillSql, ["JavaScript", 85, "Frontend", 2], handleSeedError("skills"));
-                    databaseInstance.run(skillSql, ["Angular", 80, "Frontend", 3], handleSeedError("skills"));
-                    databaseInstance.run(skillSql, ["Node.js / Express", 75, "Backend", 4], handleSeedError("skills"));
-                    databaseInstance.run(skillSql, ["SQL (SQLite/MySQL)", 70, "Database", 5], handleSeedError("skills"));
-                    databaseInstance.run(skillSql, ["Git & GitHub", 85, "Tools", 6], handleSeedError("skills"));
+                    // --- Seed Experience (Giữ nguyên, không có ảnh) ---
+                    const experienceSql = `INSERT INTO experience(job_title, company_name, period, description, display_order) VALUES(?, ?, ?, ?, ?)`;
+                    databaseInstance.run(experienceSql, ["Full-Stack Developer (Freelance)", "Self-Employed", "Jan 2024 — Present", "Developing and maintaining...", 1], handleSeedError("experience"));
+                    databaseInstance.run(experienceSql, ["Web Development Intern", "Example Tech Solutions", "Jun 2023 — Aug 2023", "Assisted the development team...", 2], handleSeedError("experience"));
 
-                    // --- Seed Project Categories & Projects ---
-                    const categorySql = `INSERT INTO project_categories (name, slug) VALUES (?, ?)`;
+                    // --- Seed Skills (Giữ nguyên, không có ảnh) ---
+                    const skillSql = `INSERT INTO skills(name, percentage, category, display_order) VALUES(?, ?, ?, ?)`;
+                    databaseInstance.run(skillSql, ["HTML5 & CSS3 (Sass/SCSS)", 95, "Frontend", 1], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["JavaScript (ES6+)", 90, "Core", 2], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["TypeScript", 85, "Core", 3], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["Angular", 85, "Frontend", 4], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["Node.js", 80, "Backend", 5], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["Express.js", 80, "Backend", 6], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["SQL (MySQL, SQLite)", 75, "Database", 8], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["MongoDB", 65, "Database", 9], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["RESTful APIs", 85, "Backend", 10], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["Git & GitHub", 90, "Tools", 11], handleSeedError("skills"));
+                    databaseInstance.run(skillSql, ["Docker (Basic)", 60, "Tools", 12], handleSeedError("skills"));
+
+
+                    // --- Seed Project Categories & Projects (Sử dụng Placeholder Thumnails) ---
+                    const categorySql = `INSERT OR IGNORE INTO project_categories (name, slug) VALUES (?, ?)`;
                     const projectSql = `INSERT INTO projects (title, slug, category_id, thumbnail_image_url, description, technologies_used, project_url, source_code_url, is_featured, display_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-                    let webDevCatId, webDesignCatId, appCatId;
+                    let fullStackCatId, webDesignCatId, appCatId;
 
-                    // Chain category inserts and then project inserts using callbacks (needed for lastID with sqlite3)
-                    databaseInstance.run(categorySql, ["Web Development", "web-development"], function (err) {
-                        handleSeedError("project_categories")(err); if (!err) {
-                            webDevCatId = this.lastID;
-                            databaseInstance.run(projectSql, ["Finance App", "finance-app", webDevCatId, "./assets/images/project-1.jpg", "A web application...", "Angular, Node.js...", "#", "#", 1, 1], handleSeedError("projects"));
-                            databaseInstance.run(projectSql, ["Orizon Website", "orizon-website", webDevCatId, "./assets/images/project-2.png", "Company portfolio...", "HTML, CSS...", "#", "#", 0, 3], handleSeedError("projects"));
-                        }
-                        // Now insert the next category
-                        databaseInstance.run(categorySql, ["Web Design", "web-design"], function (err) {
-                            handleSeedError("project_categories")(err); if (!err) {
-                                webDesignCatId = this.lastID;
-                                databaseInstance.run(projectSql, ["Fundo Landing Page", "fundo-landing", webDesignCatId, "./assets/images/project-3.jpg", "Landing page design...", "Figma, HTML...", "#", null, 0, 2], handleSeedError("projects"));
-                                databaseInstance.run(projectSql, ["MetaSpark Design", "metaspark-design", webDesignCatId, "./assets/images/project-6.png", "UI/UX design...", "Figma", null, null, 0, 5], handleSeedError("projects"));
-                            }
-                            // Now insert the final category
-                            databaseInstance.run(categorySql, ["Applications", "applications"], function (err) {
-                                handleSeedError("project_categories")(err); if (!err) {
-                                    appCatId = this.lastID;
-                                    databaseInstance.run(projectSql, ["Task Manager App", "task-manager", appCatId, "./assets/images/project-8.jpg", "Simple task management...", "Angular, LocalStorage", "#", "#", 1, 4], handleSeedError("projects"));
+                    databaseInstance.run(categorySql, ["Full-Stack App", "full-stack-app"], function (err) {
+                        handleSeedError("project_categories")(err); if (!err || err.message.includes('UNIQUE constraint failed')) {
+                            databaseInstance.get(`SELECT id FROM project_categories WHERE slug = ?`, ["full-stack-app"], (errCat, rowCat) => {
+                                if (rowCat) fullStackCatId = rowCat.id;
+                                if (fullStackCatId) {
+                                    databaseInstance.run(projectSql,
+                                        ["E-commerce Platform (Uni Project)", "ecommerce-uni-project", fullStackCatId, "https://placehold.co/400x250/3F51B5/white?text=E-commerce", "A sample e-commerce site built with Angular...", "Angular, Node.js...", "#", "https://github.com/your-github/ecommerce-project", 1, 1], // Placeholder Thumbnail
+                                        handleSeedError("projects")
+                                    );
+                                    databaseInstance.run(projectSql,
+                                        ["Task Management App", "task-manager-fullstack", fullStackCatId, "https://placehold.co/400x250/03A9F4/white?text=Task+Manager", "A web app to manage daily tasks...", "Angular, Node.js...", "#", "https://github.com/your-github/task-app", 0, 3], // Placeholder Thumbnail
+                                        handleSeedError("projects")
+                                    );
                                 }
-
-                                // --- Seed Certificates (After last category/project is done queuing) ---
-                                const certificateSql = `INSERT INTO certificates (name, issuing_organization, issue_date, credential_url, description, display_order) VALUES (?, ?, ?, ?, ?, ?)`;
-                                databaseInstance.run(certificateSql, ["Angular - Complete Guide", "Udemy", "2023-05-20", "#", "Comprehensive course...", 1], handleSeedError("certificates"));
-                                databaseInstance.run(certificateSql, ["Responsive Web Design", "freeCodeCamp", "2022-11-10", "#", "Certification covering HTML5...", 2], handleSeedError("certificates"), () => {
-                                    // Callback of the VERY LAST insert in the serialize block
-                                    console.log("Finished queueing all seed data.");
-                                    resolve(); // Resolve the main promise HERE
-                                });
+                                insertNextCategory();
                             });
+                        } else { insertNextCategory(); }
+                    });
+
+                    function insertNextCategory() {
+                        databaseInstance.run(categorySql, ["Frontend Example", "frontend-example"], function (err) {
+                            handleSeedError("project_categories")(err); if (!err || err.message.includes('UNIQUE constraint failed')) {
+                                databaseInstance.get(`SELECT id FROM project_categories WHERE slug = ?`, ["frontend-example"], (errCat, rowCat) => {
+                                    if (rowCat) webDesignCatId = rowCat.id;
+                                    if (webDesignCatId) {
+                                        databaseInstance.run(projectSql,
+                                            ["Portfolio Website (This site!)", "portfolio-angular", webDesignCatId, "https://placehold.co/400x250/FF9800/white?text=Portfolio", "The personal portfolio website you are currently viewing...", "Angular, TypeScript...", "/", "https://github.com/your-github/this-portfolio", 1, 2], // Placeholder Thumbnail
+                                            handleSeedError("projects")
+                                        );
+                                    }
+                                    insertFinalCategory();
+                                });
+                            } else { insertFinalCategory(); }
                         });
-                    }); // End category chain
+                    }
+
+                    function insertFinalCategory() {
+                        databaseInstance.run(categorySql, ["Learning/Other", "other"], function (err) {
+                            handleSeedError("project_categories")(err); if (!err || err.message.includes('UNIQUE constraint failed')) {
+                                databaseInstance.get(`SELECT id FROM project_categories WHERE slug = ?`, ["other"], (errCat, rowCat) => {
+                                    if (rowCat) appCatId = rowCat.id;
+                                    seedCertificates();
+                                });
+                            } else { seedCertificates(); }
+                        });
+                    }
 
 
-                }); // End db.serialize
+                    function seedCertificates() {
+                        // --- Seed Certificates ---
+                        const certificateSql = `INSERT INTO certificates (name, issuing_organization, issue_date, credential_url, description, image_url, display_order) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+                        databaseInstance.run(certificateSql, ["EF SET English Certificate (C1 Advanced)", "EF Standard English Test", "2023-08-15", "https://www.efset.org/cert/YourCertID", "Achieved C1 Advanced level...", "https://placehold.co/300x200/795548/white?text=Cert+EFSET", 1], handleSeedError("certificates")); // Placeholder Image
+                        databaseInstance.run(certificateSql, ["Introduction to Git and GitHub", "Coursera (Google)", "2023-02-10", "#", "Learned version control...", "https://placehold.co/300x200/9E9E9E/black?text=Cert+Git", 2], handleSeedError("certificates")); // Placeholder Image
+                        // Callback lệnh cuối
+                        databaseInstance.run("SELECT 1", [], () => {
+                            console.log("Finished queueing all seed data.");
+                            resolve();
+                        });
+                    }
+
+
+                }); // End serialize
             } else {
                 console.log("Database already contains data. Skipping seeding.");
-                resolve(); // Resolve nếu không cần seed
+                resolve();
             }
         });
     });
