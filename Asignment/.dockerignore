@@ -1,0 +1,18 @@
+# ./.dockerignore (Thư mục gốc)
+
+# Loại trừ node_modules của cả hai project (phòng trường hợp bạn chạy install ở gốc)
+**/node_modules
+
+# Git
+.git
+.gitignore
+
+# Docker compose file (không cần gửi vào context build)
+docker-compose*.yml
+
+# Thư mục data của DB (nếu dùng bind mount)
+database-data/
+
+# Các file cấu hình môi trường, logs chung, etc.
+*.log
+.env*

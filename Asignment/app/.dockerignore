@@ -1,0 +1,29 @@
+# app/.dockerignore
+
+# Dependencies (quan trọng nhất!)
+node_modules
+pnpm-lock.yaml # Thường không cần copy lại khi đã COPY riêng ở đầu
+package-lock.json # Nếu có
+
+# Build output (không cần copy source vào giai đoạn build lại kết quả build cũ)
+dist
+.angular/cache
+
+# Hệ điều hành và IDE files
+.DS_Store
+Thumbs.db
+*.log
+.idea
+.vscode
+
+# Git files
+.git
+.gitignore
+
+# Dockerfile của chính nó và các file liên quan Docker Compose
+Dockerfile
+docker-compose*.yml
+nginx.conf # File này copy riêng trong stage serve
+
+# Các file/thư mục khác không cần thiết cho quá trình build
+# (ví dụ: file tạm, tài liệu, thư mục test nếu không chạy test trong Docker,...)

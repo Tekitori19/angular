@@ -1,0 +1,60 @@
+# docker-compose.yml
+
+# Version là tùy chọn trong các phiên bản mới, có thể bỏ qua
+# version: '3.8'
+
+services:
+  # ---- Service Backend (Node.js) ----
+  backend:
+    container_name: portfolio-backend # Tên dễ nhận biết cho container
+    build:
+      context: ./pofolio-node # Đường dẫn tới thư mục chứa Dockerfile backend
+      dockerfile: Dockerfile     # Tên file Dockerfile (mặc định là Dockerfile)
+    ports:
+      # Ánh xạ cổng 3000 của container ra cổng 3000 trên máy host
+      # <HOST_PORT>:<CONTAINER_PORT>
+      - "3000:3000"
+    volumes:
+      # Sử dụng named volume 'db-data' để lưu trữ file SQLite
+      # Mount volume này vào thư mục /usr/src/app/database nơi file portfolio.db sẽ được tạo/đọc
+      # Dữ liệu sẽ được giữ lại ngay cả khi container bị xóa và tạo lại.
+      - db-data:/usr/src/app/database
+      # (Optional) Bind mount code để live reload khi phát triển (Không nên dùng cho production build)
+      # Nếu muốn live reload, cần bỏ copy code trong Dockerfile backend và mount như sau:
+      # - ./pofolio-node:/usr/src/app
+      # - /usr/src/app/node_modules # Mount ẩn danh để tránh ghi đè node_modules trong container
+    networks:
+      - portfolio-net # Kết nối vào mạng chung
+    # Biến môi trường (nếu cần, ví dụ: PORT)
+    # environment:
+    #   - PORT=3000
+    #   - NODE_ENV=production
+    restart: unless-stopped # Tự động khởi động lại container nếu nó bị dừng (trừ khi dừng thủ công)
+
+  # ---- Service Frontend (Angular + Nginx) ----
+  frontend:
+    container_name: portfolio-frontend
+    build:
+      context: ./app # Đường dẫn tới thư mục chứa Dockerfile frontend
+      dockerfile: Dockerfile
+    ports:
+      # Ánh xạ cổng 80 của Nginx ra cổng 8080 trên máy host
+      # Truy cập frontend qua http://localhost:8080
+      - "8080:80"
+    networks:
+      - portfolio-net
+    # Đảm bảo frontend khởi động sau backend
+    # Lưu ý: chỉ đảm bảo thứ tự khởi động, không đảm bảo API đã sẵn sàng.
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# --- Định nghĩa Volumes ---
+volumes:
+  db-data: # Tên của named volume (Docker sẽ quản lý)
+    driver: local # Sử dụng driver mặc định trên máy host
+
+# --- Định nghĩa Networks ---
+networks:
+  portfolio-net: # Tên của mạng tùy chỉnh
+    driver: bridge # Sử dụng bridge network driver

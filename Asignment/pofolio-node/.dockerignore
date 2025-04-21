@@ -1,0 +1,9 @@
+# pofolio-node/.dockerignore
+node_modules
+*.log
+pnpm-debug.log
+.env*
+.git
+.gitignore
+Dockerfile
+portfolio.db
